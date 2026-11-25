@@ -1,0 +1,2237 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Preparatore Casa</title>
+  <meta name="description" content="Personal trainer a casa senza attrezzi e piano cena del giorno successivo." />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Preparatore" />
+  <meta name="theme-color" content="#eaf1fb" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#070d19" media="(prefers-color-scheme: dark)" />
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+  <style>
+    /* ──────────────────────────────────────────────────────────────
+       APPLE iOS 26 LIQUID GLASS DESIGN SYSTEM (iPhone-First)
+       ────────────────────────────────────────────────────────────── */
+    :root {
+      --bg-base: #eaf1fb;
+      --orb-1: rgba(56, 189, 248, 0.28);
+      --orb-2: rgba(59, 130, 246, 0.24);
+      --orb-3: rgba(16, 185, 129, 0.16);
+
+      --text: #0b1220;
+      --text-2: #475569;
+      --text-3: #64748b;
+
+      --glass-bg: rgba(255, 255, 255, 0.62);
+      --glass-bg-strong: rgba(255, 255, 255, 0.78);
+      --glass-sub: rgba(255, 255, 255, 0.48);
+      --glass-border: rgba(255, 255, 255, 0.78);
+      --glass-hairline: rgba(15, 23, 42, 0.08);
+      --glass-shadow:
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.92),
+        inset 0 -1px 0 0 rgba(255, 255, 255, 0.22),
+        0 10px 30px -12px rgba(15, 23, 42, 0.12),
+        0 2px 6px -1px rgba(15, 23, 42, 0.05);
+
+      --tabbar-bg: rgba(255, 255, 255, 0.72);
+      --tabbar-pill: rgba(255, 255, 255, 0.94);
+      --tabbar-shadow:
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.95),
+        0 14px 38px -10px rgba(15, 23, 42, 0.22),
+        0 2px 8px rgba(15, 23, 42, 0.08);
+
+      --accent: #007aff;
+      --accent-2: #2563eb;
+      --accent-soft: rgba(0, 122, 255, 0.13);
+      --accent-text: #ffffff;
+      --success: #16a34a;
+      --success-soft: rgba(22, 163, 74, 0.14);
+      --warning: #d97706;
+      --warning-soft: rgba(217, 119, 6, 0.14);
+      --danger: #dc2626;
+
+      --input-bg: rgba(255, 255, 255, 0.74);
+      --seg-bg: rgba(15, 23, 42, 0.065);
+      --seg-active: rgba(255, 255, 255, 0.94);
+      --sheet-bg: rgba(246, 249, 255, 0.88);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg-base: #070d19;
+        --orb-1: rgba(14, 165, 233, 0.24);
+        --orb-2: rgba(37, 99, 235, 0.26);
+        --orb-3: rgba(16, 185, 129, 0.14);
+
+        --text: #f3f7ff;
+        --text-2: #9fb0c7;
+        --text-3: #7c8fa8;
+
+        --glass-bg: rgba(22, 32, 50, 0.56);
+        --glass-bg-strong: rgba(26, 38, 60, 0.74);
+        --glass-sub: rgba(255, 255, 255, 0.065);
+        --glass-border: rgba(255, 255, 255, 0.14);
+        --glass-hairline: rgba(255, 255, 255, 0.09);
+        --glass-shadow:
+          inset 0 1px 0 0 rgba(255, 255, 255, 0.18),
+          inset 0 -1px 0 0 rgba(255, 255, 255, 0.04),
+          0 16px 36px -14px rgba(0, 0, 0, 0.55);
+
+        --tabbar-bg: rgba(20, 29, 46, 0.72);
+        --tabbar-pill: rgba(255, 255, 255, 0.14);
+        --tabbar-shadow:
+          inset 0 1px 0 0 rgba(255, 255, 255, 0.2),
+          0 18px 44px -8px rgba(0, 0, 0, 0.65);
+
+        --accent: #0a84ff;
+        --accent-2: #38bdf8;
+        --accent-soft: rgba(10, 132, 255, 0.22);
+        --accent-text: #ffffff;
+        --success: #30d158;
+        --success-soft: rgba(48, 209, 88, 0.18);
+        --warning: #ff9f0a;
+        --warning-soft: rgba(255, 159, 10, 0.18);
+        --danger: #ff453a;
+
+        --input-bg: rgba(255, 255, 255, 0.08);
+        --seg-bg: rgba(255, 255, 255, 0.08);
+        --seg-active: rgba(255, 255, 255, 0.18);
+        --sheet-bg: rgba(14, 21, 35, 0.88);
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg-base: #070d19;
+      --orb-1: rgba(14, 165, 233, 0.24);
+      --orb-2: rgba(37, 99, 235, 0.26);
+      --orb-3: rgba(16, 185, 129, 0.14);
+      --text: #f3f7ff;
+      --text-2: #9fb0c7;
+      --text-3: #7c8fa8;
+      --glass-bg: rgba(22, 32, 50, 0.56);
+      --glass-bg-strong: rgba(26, 38, 60, 0.74);
+      --glass-sub: rgba(255, 255, 255, 0.065);
+      --glass-border: rgba(255, 255, 255, 0.14);
+      --glass-hairline: rgba(255, 255, 255, 0.09);
+      --glass-shadow:
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.18),
+        inset 0 -1px 0 0 rgba(255, 255, 255, 0.04),
+        0 16px 36px -14px rgba(0, 0, 0, 0.55);
+      --tabbar-bg: rgba(20, 29, 46, 0.72);
+      --tabbar-pill: rgba(255, 255, 255, 0.14);
+      --tabbar-shadow:
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.2),
+        0 18px 44px -8px rgba(0, 0, 0, 0.65);
+      --accent: #0a84ff;
+      --accent-2: #38bdf8;
+      --accent-soft: rgba(10, 132, 255, 0.22);
+      --accent-text: #ffffff;
+      --success: #30d158;
+      --success-soft: rgba(48, 209, 88, 0.18);
+      --warning: #ff9f0a;
+      --warning-soft: rgba(255, 159, 10, 0.18);
+      --danger: #ff453a;
+      --input-bg: rgba(255, 255, 255, 0.08);
+      --seg-bg: rgba(255, 255, 255, 0.08);
+      --seg-active: rgba(255, 255, 255, 0.18);
+      --sheet-bg: rgba(14, 21, 35, 0.88);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg-base);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100dvh;
+      overflow-x: hidden;
+    }
+
+    /* Ambient luminous backdrop refracted through Liquid Glass */
+    .ambient-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+      background:
+        radial-gradient(620px 460px at 14% 6%, var(--orb-1), transparent 70%),
+        radial-gradient(560px 500px at 90% 18%, var(--orb-2), transparent 72%),
+        radial-gradient(540px 460px at 50% 94%, var(--orb-3), transparent 70%),
+        var(--bg-base);
+    }
+
+    .app-shell {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: calc(14px + env(safe-area-inset-top)) 16px calc(106px + env(safe-area-inset-bottom));
+    }
+
+    /* Typography helpers */
+    .tabular { font-variant-numeric: tabular-nums; }
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+    .h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.025em; line-height: 1.15; margin: 0; }
+    .h2 { font-size: 19px; font-weight: 700; letter-spacing: -0.018em; line-height: 1.22; margin: 0; }
+    .h3 { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.3; margin: 0; }
+    .muted { color: var(--text-2); }
+    .sub-xs { font-size: 12px; color: var(--text-2); line-height: 1.45; }
+    .sub-sm { font-size: 13px; color: var(--text-2); line-height: 1.45; }
+
+    /* Liquid Glass Surfaces */
+    .glass {
+      background: var(--glass-bg);
+      backdrop-filter: blur(26px) saturate(190%);
+      -webkit-backdrop-filter: blur(26px) saturate(190%);
+      border: 1px solid var(--glass-border);
+      border-radius: 26px;
+      box-shadow: var(--glass-shadow);
+    }
+    .glass-sub {
+      background: var(--glass-sub);
+      border: 1px solid var(--glass-hairline);
+      border-radius: 18px;
+    }
+
+    /* Header */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .theme-btn {
+      height: 38px;
+      padding: 0 13px;
+      border-radius: 999px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: transform 0.16s ease;
+    }
+    .theme-btn:active { transform: scale(0.95); }
+
+    /* Layout spacing & grids */
+    .stack-md { display: flex; flex-direction: column; gap: 14px; }
+    .stack-sm { display: flex; flex-direction: column; gap: 10px; }
+    .stack-xs { display: flex; flex-direction: column; gap: 6px; }
+    .row { display: flex; align-items: center; gap: 10px; }
+    .row-between { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .row-wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .pad-card { padding: 18px; }
+    .pad-sub { padding: 13px; }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .kpi-card {
+      padding: 14px 15px;
+      border-radius: 22px;
+    }
+    .kpi-val { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; margin-top: 3px; }
+
+    /* Buttons (Apple HIG >=44px primary touch targets) */
+    .btn {
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      border: none;
+      border-radius: 999px;
+      min-height: 46px;
+      padding: 0 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: transform 0.15s cubic-bezier(.2,.8,.2,1), opacity 0.15s ease;
+      text-decoration: none;
+    }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary {
+      background: linear-gradient(180deg, #1d8cff 0%, #0070f3 100%);
+      color: var(--accent-text);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.35),
+        0 8px 22px -6px rgba(0, 122, 255, 0.55);
+    }
+    .btn-glass {
+      background: var(--glass-bg-strong);
+      color: var(--text);
+      border: 1px solid var(--glass-border);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+    }
+    .btn-success {
+      background: var(--success-soft);
+      color: var(--success);
+      border: 1px solid rgba(22, 163, 74, 0.25);
+    }
+    .btn-sm { min-height: 36px; font-size: 13px; padding: 0 14px; }
+    .btn-full { width: 100%; }
+
+    /* Pills & Badges */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--glass-sub);
+      border: 1px solid var(--glass-hairline);
+      color: var(--text);
+    }
+    .pill-accent { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+    .pill-success { background: var(--success-soft); color: var(--success); border-color: transparent; }
+    .pill-warn { background: var(--warning-soft); color: var(--warning); border-color: transparent; }
+
+    /* iOS Liquid Glass Segmented Control */
+    .segmented {
+      display: inline-flex;
+      padding: 3px;
+      border-radius: 999px;
+      background: var(--seg-bg);
+      border: 1px solid var(--glass-hairline);
+      gap: 2px;
+    }
+    .segmented-full { display: grid; width: 100%; }
+    .seg-btn {
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-2);
+      background: transparent;
+      border: none;
+      border-radius: 999px;
+      padding: 8px 12px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      white-space: nowrap;
+    }
+    .seg-btn.active {
+      background: var(--seg-active);
+      color: var(--text);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.65);
+    }
+
+    /* Day Strip */
+    .day-grid-5 { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 7px; }
+    .day-grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+    .day-chip {
+      font-family: inherit;
+      padding: 10px 6px;
+      border-radius: 18px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      color: var(--text);
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+    .day-chip:active { transform: scale(0.95); }
+    .day-chip.active {
+      background: linear-gradient(180deg, #1d8cff 0%, #0070f3 100%);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.35);
+      box-shadow: 0 8px 20px -6px rgba(0, 122, 255, 0.55);
+    }
+    .day-chip.active .day-sub { color: rgba(255, 255, 255, 0.85); }
+    .day-name { font-size: 13px; font-weight: 700; }
+    .day-sub { font-size: 10.5px; color: var(--text-3); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* Inputs (16px prevents iOS Safari auto-zoom!) */
+    .field-label { display: block; font-size: 12px; font-weight: 600; color: var(--text-2); margin-bottom: 5px; }
+    .input {
+      width: 100%;
+      font-family: inherit;
+      font-size: 16px;
+      color: var(--text);
+      background: var(--input-bg);
+      border: 1px solid var(--glass-hairline);
+      border-radius: 15px;
+      padding: 11px 13px;
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+
+    .form-2col { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+
+    /* Exercise Row & Accordion */
+    .block-divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 2px 2px;
+    }
+    .block-line { height: 1px; flex: 1; background: var(--glass-hairline); }
+
+    .ex-item {
+      border-radius: 20px;
+      background: var(--glass-sub);
+      border: 1px solid var(--glass-hairline);
+      overflow: hidden;
+      transition: border-color 0.2s ease;
+    }
+    .ex-item.open { border-color: rgba(0, 122, 255, 0.35); }
+    .ex-head {
+      padding: 13px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .ex-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-hairline);
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .ex-main-btn {
+      flex: 1;
+      min-width: 0;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 0;
+      color: inherit;
+      font-family: inherit;
+      cursor: pointer;
+    }
+    .ex-title { font-size: 14px; font-weight: 600; line-height: 1.25; }
+    .ex-meta { font-size: 12px; color: var(--text-2); margin-top: 3px; }
+    .ex-body {
+      padding: 0 13px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .lv-stepper {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      background: var(--glass-bg-strong);
+      border: 1px solid var(--glass-hairline);
+      overflow: hidden;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .lv-stepper button {
+      border: none;
+      background: transparent;
+      color: var(--text);
+      width: 28px;
+      height: 30px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    .lv-stepper button:disabled { opacity: 0.3; }
+    .lv-stepper span { padding: 0 4px; }
+
+    /* Exercise Animation Viewer */
+    .anim-viewer {
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--glass-hairline);
+      background: var(--glass-bg-strong);
+    }
+    .anim-stage {
+      position: relative;
+      height: 184px;
+      background: #f3f5fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .anim-stage.compact { height: 168px; }
+    .anim-svg { width: 100%; height: 100%; max-width: 320px; }
+    .anim-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: #0f172a;
+      font-size: 11px;
+      font-weight: 700;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+    }
+    .anim-ctrls {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      display: flex;
+      gap: 5px;
+    }
+    .anim-ctrl-btn {
+      font-family: inherit;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #0f172a;
+      border: 1px solid rgba(15, 23, 42, 0.1);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .anim-footer { padding: 10px 11px 11px; display: flex; flex-direction: column; gap: 8px; }
+    .anim-caption { font-size: 12.5px; font-weight: 600; margin: 0; line-height: 1.35; }
+    .anim-pills { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px; }
+    .anim-pill {
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 6px 4px;
+      border-radius: 10px;
+      border: 1px solid var(--glass-hairline);
+      background: var(--glass-sub);
+      color: var(--text-2);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      cursor: pointer;
+    }
+    .anim-pill.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: transparent;
+    }
+
+    /* Radio option tiles (Lunch / Breakfast) */
+    .radio-tile {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 11px 12px;
+      border-radius: 16px;
+      background: var(--glass-sub);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+    .radio-tile.active {
+      background: var(--glass-bg-strong);
+      border-color: var(--accent);
+    }
+    .radio-tile input { accent-color: var(--accent); margin-top: 2px; width: 16px; height: 16px; flex-shrink: 0; }
+
+    /* Calorie Allocation Bar */
+    .cal-bar {
+      height: 10px;
+      border-radius: 999px;
+      overflow: hidden;
+      display: flex;
+      background: var(--seg-bg);
+    }
+
+    /* Macro strip */
+    .macro-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
+    .macro-box {
+      padding: 9px 6px;
+      border-radius: 14px;
+      background: var(--glass-sub);
+      text-align: center;
+    }
+    .macro-val { font-size: 14px; font-weight: 700; }
+    .macro-lbl { font-size: 11px; color: var(--text-2); margin-top: 1px; }
+
+    /* Ingredient list */
+    .ing-list { list-style: none; padding: 0; margin: 0; }
+    .ing-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 6px 0;
+      font-size: 13px;
+      border-bottom: 1px solid var(--glass-hairline);
+    }
+    .ing-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+    /* Floating iOS 26 Liquid Glass Bottom Tab Bar */
+    .tabbar-wrap {
+      position: fixed;
+      left: 14px;
+      right: 14px;
+      bottom: max(12px, env(safe-area-inset-bottom));
+      z-index: 40;
+      display: flex;
+      justify-content: center;
+      pointer-events: none;
+    }
+    .tabbar {
+      pointer-events: auto;
+      width: 100%;
+      max-width: 430px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      padding: 5px;
+      border-radius: 999px;
+      background: var(--tabbar-bg);
+      backdrop-filter: blur(32px) saturate(220%);
+      -webkit-backdrop-filter: blur(32px) saturate(220%);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--tabbar-shadow);
+    }
+    .tab-btn {
+      font-family: inherit;
+      border: none;
+      background: transparent;
+      color: var(--text-2);
+      border-radius: 999px;
+      padding: 8px 4px;
+      min-height: 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.14s ease, background 0.18s ease, color 0.18s ease;
+    }
+    .tab-btn:active { transform: scale(0.93); }
+    .tab-btn.active {
+      background: var(--tabbar-pill);
+      color: var(--accent);
+      box-shadow: 0 2px 10px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.65);
+    }
+
+    /* Live Workout iOS Bottom Sheet Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      background: rgba(5, 10, 20, 0.48);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal-sheet {
+      width: 100%;
+      max-width: 560px;
+      max-height: 94dvh;
+      background: var(--sheet-bg);
+      backdrop-filter: blur(34px) saturate(200%);
+      -webkit-backdrop-filter: blur(34px) saturate(200%);
+      border-top: 1px solid var(--glass-border);
+      border-left: 1px solid var(--glass-border);
+      border-right: 1px solid var(--glass-border);
+      border-radius: 32px 32px 0 0;
+      box-shadow: 0 -16px 48px rgba(0, 0, 0, 0.28);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      padding-bottom: env(safe-area-inset-bottom);
+      animation: sheetUp 0.24s cubic-bezier(.2,.85,.25,1);
+    }
+    @media (min-width: 640px) {
+      .modal-backdrop { align-items: center; padding: 20px; }
+      .modal-sheet { border-radius: 30px; border-bottom: 1px solid var(--glass-border); padding-bottom: 0; }
+    }
+    @keyframes sheetUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .sheet-handle {
+      width: 38px;
+      height: 5px;
+      border-radius: 999px;
+      background: var(--text-3);
+      opacity: 0.35;
+      margin: 10px auto 4px;
+    }
+    .sheet-body {
+      padding: 14px 18px 20px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .progress-track { height: 4px; background: var(--seg-bg); width: 100%; }
+    .progress-fill { height: 100%; background: var(--accent); transition: width 0.3s ease; }
+    .progress-ring { transition: stroke-dashoffset 0.35s linear; }
+
+    /* Horizontal filter chips */
+    .chip-scroll {
+      display: flex;
+      gap: 7px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: none;
+    }
+    .chip-scroll::-webkit-scrollbar { display: none; }
+    .chip {
+      font-family: inherit;
+      flex-shrink: 0;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      color: var(--text-2);
+      cursor: pointer;
+    }
+    .chip.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: transparent;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      top: calc(14px + env(safe-area-inset-top));
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 80;
+      max-width: calc(100vw - 32px);
+      padding: 11px 16px;
+      border-radius: 999px;
+      background: var(--glass-bg-strong);
+      backdrop-filter: blur(26px) saturate(200%);
+      -webkit-backdrop-filter: blur(26px) saturate(200%);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--tabbar-shadow);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 600;
+      display: none;
+      text-align: center;
+    }
+    .toast.show { display: block; animation: fadeDown 0.2s ease; }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translate(-50%, -8px); }
+      to { opacity: 1; transform: translate(-50%, 0); }
+    }
+    .fade-in { animation: fadeIn 0.22s ease; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Strength bars */
+    .bar-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
+    .bar-seg { height: 6px; border-radius: 999px; background: var(--seg-bg); }
+    .bar-seg.on { background: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="ambient-bg" aria-hidden="true"></div>
+  <div id="app" class="app-shell"></div>
+
+  <!-- Floating iOS 26 Liquid Glass Bottom Tab Bar -->
+  <div class="tabbar-wrap">
+    <nav id="tabbar" class="tabbar" aria-label="Navigazione principale"></nav>
+  </div>
+
+  <!-- Live Guided Workout iOS Sheet -->
+  <div id="workout-modal" class="modal-backdrop">
+    <div id="workout-modal-content" class="modal-sheet"></div>
+  </div>
+
+  <!-- Floating Liquid Glass Toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="./engine.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      const Engine = window.PrepEngine;
+      const STORAGE_KEY = 'preparatore_casa_ios_v1';
+      let memoryFallback = null;
+
+      function loadState() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('preparatore_casa_v4');
+          if (raw) return JSON.parse(raw);
+        } catch (_) {
+          if (memoryFallback) return memoryFallback;
+        }
+        return null;
+      }
+
+      function saveState(next) {
+        memoryFallback = next;
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(next)); } catch (_) {}
+      }
+
+      let toastTimer = null;
+      function showToast(msg) {
+        const el = document.getElementById('toast');
+        if (!el) return;
+        el.textContent = msg;
+        el.classList.add('show');
+        if (toastTimer) clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => el.classList.remove('show'), 3200);
+      }
+
+      function getInitialWorkoutDayIdx(phase) {
+        const jsDay = new Date().getDay();
+        if (phase === 1) return (jsDay >= 1 && jsDay <= 5) ? jsDay - 1 : 0;
+        if (jsDay === 3 || jsDay === 4) return 1;
+        if (jsDay === 5 || jsDay === 6) return 2;
+        return 0;
+      }
+
+      function createDefaultState() {
+        return {
+          profile: {
+            heightCm: 176,
+            weightKg: null,
+            age: 26,
+            sex: 'neutral',
+            startDate: new Date().toISOString().slice(0, 10)
+          },
+          training: {
+            phase: 1,
+            durationMode: 'full60', // 60 min default!
+            selectedDayIdx: getInitialWorkoutDayIdx(1),
+            levels: { push: 1, pull: 1, shoulders: 1, core: 1 },
+            completedSessions: [],
+            soundEnabled: true,
+            animSpeedMs: 900
+          },
+          nutrition: {
+            lunchPreset: 'dirty',
+            breakfastPreset: 'light',
+            dinnerFilter: 'all',
+            chosenDinnerByDate: {},
+            recipeOffset: 0,
+            calendarName: 'cena',
+            dinnerTime: '20:00',
+            reminder2h: true
+          },
+          weightHistory: [],
+          ui: {
+            activeTab: 'today',
+            expandedExId: 'p1-l-1',
+            theme: 'auto' // 'auto' | 'light' | 'dark'
+          }
+        };
+      }
+
+      let state = Object.assign(createDefaultState(), loadState() || {});
+      const def = createDefaultState();
+      state.profile = Object.assign(def.profile, state.profile || {});
+      state.training = Object.assign(def.training, state.training || {});
+      if (!['full60', 'med30', 'quick15'].includes(state.training.durationMode)) state.training.durationMode = 'full60';
+      state.training.levels = Object.assign(def.training.levels, state.training.levels || {});
+      state.nutrition = Object.assign(def.nutrition, state.nutrition || {});
+      state.ui = Object.assign(def.ui, state.ui || {});
+      if (!Array.isArray(state.weightHistory)) state.weightHistory = [];
+      if (!Array.isArray(state.training.completedSessions)) state.training.completedSessions = [];
+
+      function applyTheme() {
+        const t = state.ui.theme || 'auto';
+        if (t === 'auto') document.documentElement.removeAttribute('data-theme');
+        else document.documentElement.setAttribute('data-theme', t);
+      }
+      applyTheme();
+
+      // ──────────────────────────────────────────────────────────────
+      // ANIMATION VIEWER CONTROLLER
+      // ──────────────────────────────────────────────────────────────
+      const animViewers = {};
+
+      function renderAnimViewerHtml(viewerId, animKey, compact) {
+        const anim = Engine.ANIMATIONS[animKey] || Engine.ANIMATIONS.warmup_shoulders;
+        if (!animViewers[viewerId] || animViewers[viewerId].animKey !== animKey) {
+          animViewers[viewerId] = { animKey, stepIdx: 0, paused: false };
+        }
+        const v = animViewers[viewerId];
+        const seqPos = v.stepIdx % anim.sequence.length;
+        const frame = anim.frames[anim.sequence[seqPos]];
+
+        return `
+          <div class="anim-viewer" data-viewer-id="${viewerId}">
+            <div class="anim-stage ${compact ? 'compact' : ''}">
+              <svg class="anim-svg" viewBox="0 0 280 170" aria-label="Dimostrazione esercizio">
+                ${Engine.buildAnimSvgInner(viewerId, anim, frame)}
+              </svg>
+              <div class="anim-badge tabular">Foto ${seqPos + 1}/${anim.sequence.length}</div>
+              <div class="anim-ctrls">
+                <button type="button" data-anim-speed="${viewerId}" class="anim-ctrl-btn">
+                  ${state.training.animSpeedMs > 1000 ? 'Lento' : 'Normale'}
+                </button>
+                <button type="button" data-anim-toggle="${viewerId}" class="anim-ctrl-btn">
+                  ${v.paused ? '▶ Play' : '⏸ Pausa'}
+                </button>
+              </div>
+            </div>
+            <div class="anim-footer">
+              <p class="anim-caption">${frame.label}</p>
+              <div class="anim-pills">
+                ${anim.stepLabels.map((lbl, idx) => `
+                  <button type="button" data-anim-jump="${viewerId}" data-anim-step="${idx}" class="anim-pill ${idx === seqPos ? 'active' : ''}">
+                    ${lbl}
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      function updateViewerDom(el, viewerId) {
+        const v = animViewers[viewerId];
+        if (!v) return;
+        const anim = Engine.ANIMATIONS[v.animKey] || Engine.ANIMATIONS.warmup_shoulders;
+        const seqPos = v.stepIdx % anim.sequence.length;
+        const frame = anim.frames[anim.sequence[seqPos]];
+        const svg = el.querySelector('.anim-svg');
+        if (svg) svg.innerHTML = Engine.buildAnimSvgInner(viewerId, anim, frame);
+        const badge = el.querySelector('.anim-badge');
+        if (badge) badge.textContent = `Foto ${seqPos + 1}/${anim.sequence.length}`;
+        const cap = el.querySelector('.anim-caption');
+        if (cap) cap.textContent = frame.label;
+        el.querySelectorAll('.anim-pill').forEach((btn, idx) => {
+          btn.classList.toggle('active', idx === seqPos);
+        });
+      }
+
+      let globalAnimInterval = null;
+      function restartGlobalAnimClock() {
+        if (globalAnimInterval) clearInterval(globalAnimInterval);
+        globalAnimInterval = setInterval(() => {
+          document.querySelectorAll('.anim-viewer').forEach(el => {
+            const vid = el.dataset.viewerId;
+            const v = animViewers[vid];
+            if (!v || v.paused) return;
+            const anim = Engine.ANIMATIONS[v.animKey] || Engine.ANIMATIONS.warmup_shoulders;
+            v.stepIdx = (v.stepIdx + 1) % anim.sequence.length;
+            updateViewerDom(el, vid);
+          });
+        }, state.training.animSpeedMs || 900);
+      }
+
+      function bindAnimViewerControls(container) {
+        container.querySelectorAll('[data-anim-toggle]').forEach(btn => {
+          btn.onclick = () => {
+            const vid = btn.dataset.animToggle;
+            if (!animViewers[vid]) return;
+            animViewers[vid].paused = !animViewers[vid].paused;
+            btn.textContent = animViewers[vid].paused ? '▶ Play' : '⏸ Pausa';
+          };
+        });
+        container.querySelectorAll('[data-anim-speed]').forEach(btn => {
+          btn.onclick = () => {
+            state.training.animSpeedMs = state.training.animSpeedMs > 1000 ? 900 : 1400;
+            saveState(state);
+            restartGlobalAnimClock();
+            document.querySelectorAll('[data-anim-speed]').forEach(b => {
+              b.textContent = state.training.animSpeedMs > 1000 ? 'Lento' : 'Normale';
+            });
+          };
+        });
+        container.querySelectorAll('[data-anim-jump]').forEach(btn => {
+          btn.onclick = () => {
+            const vid = btn.dataset.animJump;
+            const step = parseInt(btn.dataset.animStep, 10);
+            if (!animViewers[vid]) return;
+            animViewers[vid].stepIdx = step;
+            animViewers[vid].paused = true;
+            const el = container.querySelector(`.anim-viewer[data-viewer-id="${vid}"]`);
+            if (el) {
+              updateViewerDom(el, vid);
+              const tBtn = el.querySelector(`[data-anim-toggle="${vid}"]`);
+              if (tBtn) tBtn.textContent = '▶ Play';
+            }
+          };
+        });
+      }
+
+      // ──────────────────────────────────────────────────────────────
+      // WORKOUT & NUTRITION HELPERS
+      // ──────────────────────────────────────────────────────────────
+      function getWorkouts(phase) {
+        return Engine.getPhaseWorkouts(phase, state.training.durationMode, state.training.levels);
+      }
+
+      function buildEx(raw) {
+        return Engine.buildExercise(raw, state.training.levels);
+      }
+
+      const BREAKFAST_PRESETS = {
+        coffee: { label: 'Solo caffè / digiuno', kcal: 60, prot: 2 },
+        light: { label: 'Colazione leggera', kcal: 260, prot: 10 },
+        full: { label: 'Colazione + spuntino', kcal: 420, prot: 18 }
+      };
+
+      const LUNCH_PRESETS = {
+        light: { label: 'Più pulito (~650 kcal)', kcal: 650, prot: 32, desc: 'Secondo + contorno o piatto unico bilanciato' },
+        dirty: { label: 'Abbastanza sporco (~900 kcal)', kcal: 900, prot: 26, desc: 'Default: pasta condita / panino farcito / pizza al taglio' },
+        heavy: { label: 'Molto pesante (~1.150 kcal)', kcal: 1150, prot: 28, desc: 'Fast food, fritti o primo + dolce/bibita' }
+      };
+
+      function getTomorrowInfo() {
+        const now = new Date();
+        const t = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+        const days = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
+        const jsDay = t.getDay();
+        const iso = `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(t.getDate()).padStart(2, '0')}`;
+        const ws = getWorkouts(state.training.phase);
+        const matched = ws.find(w => w.jsDay === jsDay) || null;
+        return {
+          iso,
+          dayName: days[jsDay],
+          dateLabel: t.toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'short' }),
+          isWorkoutDay: Boolean(matched),
+          workout: matched
+        };
+      }
+
+      function calculateNutritionPlan() {
+        const w = parseFloat(state.profile.weightKg);
+        const h = parseFloat(state.profile.heightCm) || 176;
+        const age = parseInt(state.profile.age, 10) || 26;
+        const sex = state.profile.sex || 'neutral';
+        if (!w || isNaN(w) || w < 35 || w > 250) return null;
+
+        const sOffset = sex === 'male' ? 5 : (sex === 'female' ? -161 : -78);
+        const bmr = (10 * w) + (6.25 * h) - (5 * age) + sOffset;
+        const baseTdee = bmr * 1.28;
+        const tomorrow = getTomorrowInfo();
+        const modeBonus = state.training.durationMode === 'full60' ? 300 : (state.training.durationMode === 'med30' ? 160 : 90);
+        const workoutBonus = tomorrow.isWorkoutDay ? modeBonus : 0;
+        const tdee = Math.round(baseTdee + workoutBonus);
+
+        const safetyFloor = sex === 'female' ? 1350 : (sex === 'male' ? 1550 : 1450);
+        const targetDailyKcal = Math.max(safetyFloor, Math.round((tdee - 450) / 10) * 10);
+        const idealRefKg = Math.min(w, Math.round(23.5 * ((h / 100) ** 2)));
+        const proteinTarget = Math.round(Math.max(idealRefKg * 1.65, w * 1.25));
+
+        const bf = BREAKFAST_PRESETS[state.nutrition.breakfastPreset] || BREAKFAST_PRESETS.light;
+        const lunch = LUNCH_PRESETS[state.nutrition.lunchPreset] || LUNCH_PRESETS.dirty;
+
+        const rawRemaining = targetDailyKcal - bf.kcal - lunch.kcal;
+        const dinnerMinSafe = 380;
+        const dinnerMax = 850;
+        const dinnerBudgetKcal = Math.min(dinnerMax, Math.max(dinnerMinSafe, Math.round(rawRemaining / 10) * 10));
+        const isTightBudget = rawRemaining < dinnerMinSafe;
+        const dinnerProtTarget = Math.max(32, Math.min(55, Math.round(proteinTarget - bf.prot - lunch.prot)));
+        const bmi = +(w / ((h / 100) ** 2)).toFixed(1);
+
+        return {
+          bmi, tdee, workoutBonus, targetDailyKcal, proteinTarget,
+          breakfastKcal: bf.kcal, lunchKcal: lunch.kcal,
+          dinnerBudgetKcal, dinnerProtTarget, isTightBudget, tomorrow
+        };
+      }
+
+      function scaleRecipe(recipe, targetKcal) {
+        const ratio = Math.max(0.7, Math.min(1.45, targetKcal / recipe.baseKcal));
+        const kcal = Math.round((recipe.baseKcal * ratio) / 5) * 5;
+        const prot = Math.round(recipe.baseProt * Math.min(1.25, Math.max(0.85, ratio)));
+        const carb = Math.round(recipe.baseCarb * (targetKcal < 460 ? ratio * 0.8 : ratio));
+        const fat = Math.round(recipe.baseFat * ratio);
+        const ingredients = recipe.ingredients.map(ing => {
+          if (!ing.qty || !ing.scalable) return ing;
+          const factor = (ing.carbFlex && targetKcal < 450) ? ratio * 0.72 : ratio;
+          const step = ing.qty >= 100 ? 10 : (ing.qty >= 20 ? 5 : 1);
+          const scaled = Math.max(step, Math.round((ing.qty * factor) / step) * step);
+          return Object.assign({}, ing, { qty: scaled });
+        });
+        return Object.assign({}, recipe, { kcal, prot, carb, fat, ingredients });
+      }
+
+      function getRecommendedDinners(plan) {
+        const f = state.nutrition.dinnerFilter;
+        const all = Engine.DINNER_RECIPES;
+        const list = f === 'all' ? all : all.filter(r => r.tags.includes(f));
+        const pool = list.length ? list : all;
+        const dateNum = plan.tomorrow.iso.split('-').reduce((a, v) => a + parseInt(v, 10), 0);
+        const start = (dateNum + (state.nutrition.recipeOffset || 0)) % pool.length;
+        const picks = [];
+        for (let i = 0; i < Math.min(3, pool.length); i++) {
+          picks.push(scaleRecipe(pool[(start + i) % pool.length], plan.dinnerBudgetKcal));
+        }
+        return picks;
+      }
+
+      function getChosenDinnerForTomorrow(plan) {
+        if (!plan) return null;
+        const id = state.nutrition.chosenDinnerByDate[plan.tomorrow.iso];
+        if (!id) return null;
+        const base = Engine.DINNER_RECIPES.find(r => r.id === id);
+        return base ? scaleRecipe(base, plan.dinnerBudgetKcal) : null;
+      }
+
+      // ──────────────────────────────────────────────────────────────
+      // iPHONE CALENDAR .ICS EXPORT (Optimized for iOS Safari & PWA)
+      // ──────────────────────────────────────────────────────────────
+      function icsEscape(str) {
+        return String(str || '').replace(/\\/g, '\\\\').replace(/\n/g, '\\n').replace(/,/g, '\\,').replace(/;/g, '\\;');
+      }
+
+      function downloadDinnerIcs(recipe, tomorrowInfo) {
+        const calName = (state.nutrition.calendarName || 'cena').trim();
+        const timeStr = state.nutrition.dinnerTime || '20:00';
+        const [y, m, d] = tomorrowInfo.iso.split('-').map(Number);
+        const [hh, mm] = timeStr.split(':').map(Number);
+        const pad = n => String(n).padStart(2, '0');
+        const start = `${y}${pad(m)}${pad(d)}T${pad(hh)}${pad(mm)}00`;
+        const endDate = new Date(y, m - 1, d, hh, mm + 45);
+        const end = `${endDate.getFullYear()}${pad(endDate.getMonth() + 1)}${pad(endDate.getDate())}T${pad(endDate.getHours())}${pad(endDate.getMinutes())}00`;
+        const nowStamp = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+
+        const ingLines = recipe.ingredients.map(i => `- ${i.name}: ${i.qty ? `${i.qty} ${i.unit}` : i.unit}`).join('\n');
+        const notes = `Valori adattati al tuo peso: ~${recipe.kcal} kcal (${recipe.prot}g proteine, ${recipe.carb}g carbo, ${recipe.fat}g grassi)\nTempo preparazione: ${recipe.prepMin} min\n\nINGREDIENTI PER DOMANI:\n${ingLines}\n\nPREPARAZIONE:\n${recipe.steps}`;
+
+        const lines = [
+          'BEGIN:VCALENDAR',
+          'VERSION:2.0',
+          'PRODID:-//Preparatore Casa//Cena iPhone//IT',
+          'CALSCALE:GREGORIAN',
+          'METHOD:PUBLISH',
+          `X-WR-CALNAME:${icsEscape(calName)}`,
+          'BEGIN:VEVENT',
+          `UID:cena-${tomorrowInfo.iso}-${recipe.id}@preparatore-casa`,
+          `DTSTAMP:${nowStamp}`,
+          `DTSTART:${start}`,
+          `DTEND:${end}`,
+          `SUMMARY:${icsEscape('Cena: ' + recipe.title)}`,
+          `CATEGORIES:${icsEscape(calName)}`,
+          `DESCRIPTION:${icsEscape(notes)}`
+        ];
+        if (state.nutrition.reminder2h) {
+          lines.push('BEGIN:VALARM', 'TRIGGER:-PT2H', 'ACTION:DISPLAY', `DESCRIPTION:${icsEscape('Tra 2 ore cena: ' + recipe.title)}`, 'END:VALARM');
+        }
+        lines.push('END:VEVENT', 'END:VCALENDAR');
+        const icsContent = lines.join('\r\n');
+
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        if (isIOS) {
+          // Direct data URI triggers native Apple Calendar sheet smoothly on iPhone Safari / PWA
+          window.location.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(icsContent);
+        } else {
+          const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `cena-${tomorrowInfo.iso}.ics`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          setTimeout(() => URL.revokeObjectURL(url), 1500);
+        }
+        showToast(`Evento pronto! Su iPhone seleziona il calendario "${calName}" e tocca Aggiungi.`);
+      }
+
+      // ──────────────────────────────────────────────────────────────
+      // SF-STYLE MINIMAL ICONS
+      // ──────────────────────────────────────────────────────────────
+      const ICONS = {
+        home: '<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><path d="M9 22V12h6v10"/></svg>',
+        dumbbell: '<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5h11"/><path d="M6.5 17.5h11"/><path d="M3 10v4"/><path d="M21 10v4"/><rect x="5" y="7" width="3" height="10" rx="1"/><rect x="16" y="7" width="3" height="10" rx="1"/><path d="M8 12h8"/></svg>',
+        utensils: '<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>',
+        chart: '<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>',
+        play: '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>',
+        check: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+        calendar: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+        refresh: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>',
+        close: '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',
+        sun: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>',
+        moon: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>'
+      };
+
+      // ──────────────────────────────────────────────────────────────
+      // WEB AUDIO CHIME & LIVE WORKOUT SHEET
+      // ──────────────────────────────────────────────────────────────
+      function playBeep(freq, dur) {
+        if (!state.training.soundEnabled) return;
+        try {
+          const ctx = new (window.AudioContext || window.webkitAudioContext)();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.value = freq || 660;
+          gain.gain.value = 0.08;
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          setTimeout(() => { osc.stop(); ctx.close(); }, dur || 140);
+        } catch (_) {}
+      }
+
+      let liveSession = null;
+      let timerInterval = null;
+
+      function startLiveWorkout(workout) {
+        const exercises = workout.exercises.map(buildEx);
+        liveSession = {
+          workout,
+          exercises,
+          exIdx: 0,
+          setIdx: 1,
+          mode: exercises[0].type === 'time' ? 'ready-work' : 'reps',
+          secondsLeft: exercises[0].type === 'time' ? exercises[0].value : 0,
+          totalSeconds: exercises[0].type === 'time' ? exercises[0].value : 0,
+          startedAt: Date.now(),
+          effort: 'giusto'
+        };
+        document.getElementById('workout-modal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+        renderLiveModal();
+      }
+
+      function closeLiveWorkout() {
+        if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+        liveSession = null;
+        document.getElementById('workout-modal').classList.remove('open');
+        document.body.style.overflow = '';
+        render();
+      }
+
+      function startTimer(seconds, onDone) {
+        if (timerInterval) clearInterval(timerInterval);
+        liveSession.secondsLeft = seconds;
+        liveSession.totalSeconds = seconds;
+        renderLiveModal();
+        timerInterval = setInterval(() => {
+          if (!liveSession) { clearInterval(timerInterval); return; }
+          liveSession.secondsLeft -= 1;
+          if (liveSession.secondsLeft <= 3 && liveSession.secondsLeft > 0) playBeep(520, 80);
+          if (liveSession.secondsLeft <= 0) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            playBeep(880, 220);
+            onDone();
+          } else {
+            const secEl = document.getElementById('live-timer-sec');
+            const ringEl = document.getElementById('live-timer-ring');
+            if (secEl) secEl.textContent = `${liveSession.secondsLeft}s`;
+            if (ringEl && liveSession.totalSeconds > 0) {
+              const circ = 2 * Math.PI * 42;
+              ringEl.setAttribute('stroke-dashoffset', String(circ * (1 - liveSession.secondsLeft / liveSession.totalSeconds)));
+            }
+          }
+        }, 1000);
+      }
+
+      function advanceAfterSet() {
+        const curEx = liveSession.exercises[liveSession.exIdx];
+        if (liveSession.setIdx >= curEx.sets && liveSession.exIdx >= liveSession.exercises.length - 1) {
+          liveSession.mode = 'done';
+          renderLiveModal();
+          return;
+        }
+        liveSession.mode = 'resting';
+        startTimer(curEx.rest || 45, moveToNextSetOrExercise);
+      }
+
+      function moveToNextSetOrExercise() {
+        if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+        const curEx = liveSession.exercises[liveSession.exIdx];
+        if (liveSession.setIdx < curEx.sets) liveSession.setIdx += 1;
+        else { liveSession.exIdx += 1; liveSession.setIdx = 1; }
+        const nextEx = liveSession.exercises[liveSession.exIdx];
+        liveSession.mode = nextEx.type === 'time' ? 'ready-work' : 'reps';
+        liveSession.secondsLeft = nextEx.type === 'time' ? nextEx.value : 0;
+        liveSession.totalSeconds = nextEx.type === 'time' ? nextEx.value : 0;
+        renderLiveModal();
+      }
+
+      function finishAndSaveWorkout(effort) {
+        const elapsedMin = Math.max(5, Math.round((Date.now() - liveSession.startedAt) / 60000));
+        const w = state.profile.weightKg || 78;
+        const kcalEst = Math.round((liveSession.workout.kcalFactor || 6.0) * (w / 75) * Math.max(liveSession.workout.estMin, elapsedMin) * 0.9);
+        const todayIso = new Date().toISOString().slice(0, 10);
+
+        state.training.completedSessions.unshift({
+          date: todayIso, dayKey: liveSession.workout.key, title: liveSession.workout.focus,
+          phase: state.training.phase, durationMin: elapsedMin, kcalEst, effort
+        });
+        if (effort === 'facile') {
+          const tracks = new Set(liveSession.exercises.map(e => e.track).filter(Boolean));
+          tracks.forEach(tr => { if (state.training.levels[tr] < 4) state.training.levels[tr] += 1; });
+        }
+        if (state.training.phase === 1 && state.training.completedSessions.filter(s => s.phase === 1).length >= 10) {
+          state.training.phase = 2;
+          state.training.selectedDayIdx = 0;
+        }
+        saveState(state);
+        showToast('Allenamento salvato nei progressi!');
+        closeLiveWorkout();
+      }
+
+      function renderLiveModal() {
+        const box = document.getElementById('workout-modal-content');
+        if (!liveSession) return;
+
+        const totalSteps = liveSession.exercises.reduce((a, e) => a + e.sets, 0);
+        let doneSteps = 0;
+        for (let i = 0; i < liveSession.exIdx; i++) doneSteps += liveSession.exercises[i].sets;
+        doneSteps += (liveSession.setIdx - 1);
+        const pct = liveSession.mode === 'done' ? 100 : Math.round((doneSteps / totalSteps) * 100);
+
+        if (liveSession.mode === 'done') {
+          const elapsedMin = Math.max(1, Math.round((Date.now() - liveSession.startedAt) / 60000));
+          box.innerHTML = `
+            <div class="sheet-handle"></div>
+            <div class="sheet-body" style="text-align:center;">
+              <div style="width:54px;height:54px;margin:6px auto 0;border-radius:999px;background:var(--success-soft);color:var(--success);display:flex;align-items:center;justify-content:center;">
+                ${ICONS.check}
+              </div>
+              <div class="stack-xs">
+                <h2 class="h2">Allenamento completato!</h2>
+                <p class="sub-sm">${liveSession.workout.focus} · ${elapsedMin} min</p>
+              </div>
+              <div class="stack-xs" style="text-align:left;padding-top:6px;">
+                <span class="eyebrow">Come è andata la fatica?</span>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+                  ${[
+                    { id: 'facile', l: 'Facile', s: 'Sali livello' },
+                    { id: 'giusto', l: 'Giusto', s: 'Mantieni' },
+                    { id: 'duro', l: 'Duro', s: 'Consolida' }
+                  ].map(o => `
+                    <button data-effort="${o.id}" class="glass-sub pad-sub effort-btn" style="text-align:center;cursor:pointer;font-family:inherit;color:var(--text);${liveSession.effort === o.id ? 'border-color:var(--accent);background:var(--accent-soft);' : ''}">
+                      <div style="font-size:14px;font-weight:700;">${o.l}</div>
+                      <div class="sub-xs">${o.s}</div>
+                    </button>
+                  `).join('')}
+                </div>
+              </div>
+              <button id="btn-save-workout" class="btn btn-primary btn-full" style="margin-top:6px;">Salva nei progressi</button>
+            </div>
+          `;
+          box.querySelectorAll('.effort-btn').forEach(b => { b.onclick = () => { liveSession.effort = b.dataset.effort; renderLiveModal(); }; });
+          box.querySelector('#btn-save-workout').onclick = () => finishAndSaveWorkout(liveSession.effort);
+          return;
+        }
+
+        const curEx = liveSession.exercises[liveSession.exIdx];
+        const nextExObj = liveSession.setIdx < curEx.sets ? curEx : liveSession.exercises[liveSession.exIdx + 1];
+        const nextLabel = liveSession.setIdx < curEx.sets
+          ? `${curEx.name} (Serie ${liveSession.setIdx + 1}/${curEx.sets})`
+          : (nextExObj ? nextExObj.name : 'Fine allenamento!');
+
+        const ringCirc = 2 * Math.PI * 42;
+        const ringOffset = liveSession.totalSeconds > 0 ? ringCirc * (1 - liveSession.secondsLeft / liveSession.totalSeconds) : 0;
+
+        box.innerHTML = `
+          <div class="sheet-handle"></div>
+          <div class="row-between" style="padding:4px 18px 10px;">
+            <div style="min-width:0;">
+              <div class="eyebrow">${curEx.block || 'Allenamento'} · ${liveSession.exIdx + 1}/${liveSession.exercises.length}</div>
+              <div class="h3" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${liveSession.workout.focus}</div>
+            </div>
+            <button id="btn-close-modal" class="btn btn-glass btn-sm" style="width:36px;padding:0;" aria-label="Chiudi">${ICONS.close}</button>
+          </div>
+          <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+
+          <div class="sheet-body">
+            ${liveSession.mode === 'resting' ? `
+              <div class="glass-sub pad-sub row-between">
+                <div class="stack-xs" style="min-width:0;">
+                  <span class="pill pill-accent" style="width:fit-content;">Recupero</span>
+                  <div class="sub-xs">Prossimo esercizio</div>
+                  <div class="h3">${nextLabel}</div>
+                </div>
+                <div style="position:relative;width:88px;height:88px;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+                  <svg width="88" height="88" viewBox="0 0 100 100" style="transform:rotate(-90deg);">
+                    <circle cx="50" cy="50" r="42" fill="none" stroke="var(--seg-bg)" stroke-width="7"/>
+                    <circle id="live-timer-ring" cx="50" cy="50" r="42" fill="none" stroke="var(--accent)" stroke-width="7" stroke-linecap="round"
+                      stroke-dasharray="${ringCirc}" stroke-dashoffset="${ringOffset}" class="progress-ring"/>
+                  </svg>
+                  <span id="live-timer-sec" class="tabular" style="position:absolute;font-size:21px;font-weight:700;">${liveSession.secondsLeft}s</span>
+                </div>
+              </div>
+              ${nextExObj ? renderAnimViewerHtml('live-rest-prev', nextExObj.animKey, true) : ''}
+              <div class="row">
+                <button id="btn-add-15" class="btn btn-glass" style="flex:0 0 92px;">+15s</button>
+                <button id="btn-skip-rest" class="btn btn-primary" style="flex:1;">Salta recupero</button>
+              </div>
+            ` : `
+              <div class="row-between">
+                <div style="min-width:0;">
+                  <div class="sub-xs">${curEx.muscle}${curEx.level ? ` · Lv.${curEx.level}/4` : ''}</div>
+                  <h3 class="h2" style="margin-top:2px;">${curEx.name}</h3>
+                </div>
+                <span class="pill tabular" style="flex-shrink:0;">Serie ${liveSession.setIdx}/${curEx.sets}</span>
+              </div>
+
+              ${renderAnimViewerHtml('live-active', curEx.animKey, true)}
+
+              ${curEx.type === 'time' ? `
+                <div class="glass-sub pad-sub row">
+                  <div style="position:relative;width:76px;height:76px;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+                    <svg width="76" height="76" viewBox="0 0 100 100" style="transform:rotate(-90deg);">
+                      <circle cx="50" cy="50" r="42" fill="none" stroke="var(--seg-bg)" stroke-width="7"/>
+                      <circle id="live-timer-ring" cx="50" cy="50" r="42" fill="none" stroke="var(--success)" stroke-width="7" stroke-linecap="round"
+                        stroke-dasharray="${ringCirc}" stroke-dashoffset="${ringOffset}" class="progress-ring"/>
+                    </svg>
+                    <span id="live-timer-sec" class="tabular" style="position:absolute;font-size:18px;font-weight:700;">${liveSession.secondsLeft}s</span>
+                  </div>
+                  <div style="flex:1;" class="stack-xs">
+                    <div class="sub-xs">Durata serie: <strong style="color:var(--text);">${curEx.value} secondi</strong></div>
+                    ${liveSession.mode === 'ready-work' ? `
+                      <button id="btn-start-work-timer" class="btn btn-primary btn-full">${ICONS.play} Avvia (${curEx.value}s)</button>
+                    ` : `
+                      <button id="btn-finish-set" class="btn btn-glass btn-full">Completa serie ora</button>
+                    `}
+                  </div>
+                </div>
+              ` : `
+                <div class="glass-sub pad-sub row-between">
+                  <div>
+                    <div class="sub-xs">Obiettivo serie</div>
+                    <div class="tabular" style="font-size:22px;font-weight:700;">${curEx.value} ripetizioni</div>
+                  </div>
+                  <div style="text-align:right;">
+                    <div class="sub-xs">Supporto</div>
+                    <div style="font-size:13px;font-weight:600;">${curEx.prop || 'Nessuno'}</div>
+                  </div>
+                </div>
+                <button id="btn-finish-set" class="btn btn-primary btn-full">
+                  ${ICONS.check} Serie completata → Recupero (${curEx.rest}s)
+                </button>
+              `}
+
+              <div class="glass-sub pad-sub stack-xs">
+                <div class="sub-xs"><strong style="color:var(--text);">Tecnica:</strong> ${curEx.cue}</div>
+                ${curEx.mistake ? `<div class="sub-xs"><strong style="color:var(--warning);">Evita:</strong> ${curEx.mistake}</div>` : ''}
+              </div>
+            `}
+          </div>
+        `;
+
+        bindAnimViewerControls(box);
+        box.querySelector('#btn-close-modal').onclick = closeLiveWorkout;
+        const b15 = box.querySelector('#btn-add-15');
+        if (b15) b15.onclick = () => { liveSession.secondsLeft += 15; liveSession.totalSeconds += 15; renderLiveModal(); };
+        const bSkip = box.querySelector('#btn-skip-rest');
+        if (bSkip) bSkip.onclick = moveToNextSetOrExercise;
+        const bStart = box.querySelector('#btn-start-work-timer');
+        if (bStart) bStart.onclick = () => { liveSession.mode = 'working'; playBeep(660, 120); startTimer(curEx.value, advanceAfterSet); };
+        const bFin = box.querySelector('#btn-finish-set');
+        if (bFin) bFin.onclick = () => { if (timerInterval) { clearInterval(timerInterval); timerInterval = null; } playBeep(740, 100); advanceAfterSet(); };
+      }
+
+      // ──────────────────────────────────────────────────────────────
+      // WEIGHT CHART SVG
+      // ──────────────────────────────────────────────────────────────
+      function renderWeightChartSvg() {
+        const pts = state.weightHistory.slice(-12);
+        if (pts.length < 2) {
+          return `<div class="glass-sub pad-sub sub-xs" style="text-align:center;">Registra almeno 2 pesate (es. 1 volta a settimana al mattino) per vedere il grafico.</div>`;
+        }
+        const W = 420, H = 155, padL = 38, padR = 14, padT = 16, padB = 24;
+        const vals = pts.map(p => p.kg);
+        const minV = Math.floor(Math.min(...vals) - 0.8);
+        const maxV = Math.ceil(Math.max(...vals) + 0.8);
+        const spanV = Math.max(1, maxV - minV);
+        const coords = pts.map((p, idx) => ({
+          x: padL + (idx / (pts.length - 1)) * (W - padL - padR),
+          y: padT + (1 - (p.kg - minV) / spanV) * (H - padT - padB),
+          kg: p.kg, date: p.date
+        }));
+        const pathD = coords.map((c, i) => `${i === 0 ? 'M' : 'L'} ${c.x.toFixed(1)} ${c.y.toFixed(1)}`).join(' ');
+        const areaD = `${pathD} L ${coords[coords.length - 1].x.toFixed(1)} ${(H - padB).toFixed(1)} L ${coords[0].x.toFixed(1)} ${(H - padB).toFixed(1)} Z`;
+
+        const grid = [0, 0.5, 1].map(t => {
+          const y = padT + t * (H - padT - padB);
+          return `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="var(--glass-hairline)" stroke-dasharray="3 3"/><text x="${padL - 7}" y="${y + 4}" text-anchor="end" fill="var(--text-3)" font-size="11">${(maxV - t * spanV).toFixed(1)}</text>`;
+        }).join('');
+        const dots = coords.map((c, i) => {
+          const lbl = c.date.slice(5).split('-').reverse().join('/');
+          const show = i === 0 || i === coords.length - 1 || coords.length <= 5;
+          return `<circle cx="${c.x}" cy="${c.y}" r="4.5" fill="var(--accent)" stroke="var(--bg-base)" stroke-width="2"/><title>${lbl}: ${c.kg} kg</title>${show ? `<text x="${c.x}" y="${H - 5}" text-anchor="middle" fill="var(--text-3)" font-size="11">${lbl}</text>` : ''}`;
+        }).join('');
+
+        return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:155px;overflow:visible;">${grid}<path d="${areaD}" fill="var(--accent)" opacity="0.14"/><path d="${pathD}" fill="none" stroke="var(--accent)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>${dots}</svg>`;
+      }
+
+      // ──────────────────────────────────────────────────────────────
+      // TAB RENDERERS
+      // ──────────────────────────────────────────────────────────────
+      function renderWeightPromptBanner() {
+        return `
+          <section class="glass pad-card stack-sm fade-in">
+            <div class="stack-xs">
+              <span class="pill pill-accent" style="width:fit-content;">Setup iniziale · 1,76 m</span>
+              <h2 class="h2">Inserisci il tuo peso</h2>
+              <p class="sub-sm">Calcolo il tuo deficit calorico sicuro (stimando un pranzo fuori casa <em>abbastanza sporco</em> ~900 kcal) e preparo la cena di domani per il calendario iPhone <strong>"${state.nutrition.calendarName}"</strong>.</p>
+            </div>
+            <form id="quick-weight-form" class="stack-sm">
+              <div class="form-2col">
+                <div>
+                  <label class="field-label" for="inp-quick-weight">Peso attuale (kg) *</label>
+                  <input id="inp-quick-weight" class="input tabular" type="number" step="0.1" min="40" max="220" required placeholder="es. 82.5" inputmode="decimal" />
+                </div>
+                <div>
+                  <label class="field-label" for="inp-quick-age">Età</label>
+                  <input id="inp-quick-age" class="input tabular" type="number" min="15" max="85" value="${state.profile.age}" inputmode="numeric" />
+                </div>
+              </div>
+              <div>
+                <label class="field-label" for="inp-quick-sex">Profilo metabolico</label>
+                <select id="inp-quick-sex" class="input">
+                  <option value="neutral" ${state.profile.sex === 'neutral' ? 'selected' : ''}>Standard (media)</option>
+                  <option value="male" ${state.profile.sex === 'male' ? 'selected' : ''}>Uomo</option>
+                  <option value="female" ${state.profile.sex === 'female' ? 'selected' : ''}>Donna</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary btn-full">Calcola il mio piano</button>
+            </form>
+          </section>
+        `;
+      }
+
+      function renderTodayTab(plan) {
+        const ws = getWorkouts(state.training.phase);
+        const todayJs = new Date().getDay();
+        const todayW = ws.find(w => w.jsDay === todayJs) || ws[0];
+        const isRestToday = !ws.some(w => w.jsDay === todayJs);
+        const todayIso = new Date().toISOString().slice(0, 10);
+        const doneToday = state.training.completedSessions.some(s => s.date === todayIso);
+        const p1Done = state.training.completedSessions.filter(s => s.phase === 1).length;
+
+        const chosenDinner = getChosenDinnerForTomorrow(plan);
+        const featuredDinner = chosenDinner || (plan ? getRecommendedDinners(plan)[0] : null);
+
+        return `
+          <div class="stack-md fade-in">
+            <div class="kpi-grid">
+              <div class="glass kpi-card">
+                <div class="eyebrow">Programma</div>
+                <div class="kpi-val">${state.training.phase === 1 ? 'Fase 1' : 'Fase 2'}</div>
+                <div class="sub-xs">${state.training.phase === 1 ? `Lun–Ven (${Math.min(10, p1Done)}/10)` : 'Lun / Mer / Ven'}</div>
+              </div>
+              <div class="glass kpi-card">
+                <div class="eyebrow">Cena domani</div>
+                <div class="kpi-val tabular">${plan ? `${plan.dinnerBudgetKcal} kcal` : '—'}</div>
+                <div class="sub-xs">${plan ? `Target ~${plan.dinnerProtTarget}g prot` : 'Inserisci peso'}</div>
+              </div>
+            </div>
+
+            <!-- Today's Workout Liquid Glass Card -->
+            <section class="glass pad-card stack-sm">
+              <div class="row-between">
+                <span class="eyebrow">${isRestToday ? 'Prossimo allenamento' : 'Allenamento di oggi'}</span>
+                <span class="pill ${doneToday ? 'pill-success' : 'pill-accent'}">${doneToday ? '✓ Completato' : todayW.tag}</span>
+              </div>
+              <div class="stack-xs">
+                <h2 class="h2">${todayW.dayFull}: ${todayW.focus}</h2>
+                <p class="sub-sm">${todayW.summary}</p>
+              </div>
+
+              <div class="row-between">
+                <span class="sub-xs tabular" style="font-weight:600;color:var(--text);">~${todayW.estMin} min · ${todayW.exercises.length} esercizi</span>
+                <div class="segmented">
+                  ${[{ id: 'full60', l: '60m' }, { id: 'med30', l: '30m' }, { id: 'quick15', l: '15m' }].map(d => `
+                    <button data-dur="${d.id}" class="seg-btn ${state.training.durationMode === d.id ? 'active' : ''}" style="padding:5px 10px;font-size:12px;">${d.l}</button>
+                  `).join('')}
+                </div>
+              </div>
+
+              <div class="glass-sub pad-sub">
+                ${todayW.exercises.filter(e => e.block !== 'Riscaldamento' && e.block !== 'Defaticamento').slice(0, 4).map(raw => {
+                  const ex = buildEx(raw);
+                  return `
+                    <div class="ing-row">
+                      <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${ex.name}</span>
+                      <span class="tabular muted" style="flex-shrink:0;font-weight:600;">${ex.sets}×${ex.type === 'time' ? ex.value + 's' : ex.value}</span>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+
+              <div class="row">
+                <button data-start-workout="${todayW.key}" class="btn btn-primary" style="flex:1;">${ICONS.play} Inizia guidato</button>
+                <button data-nav="workout" class="btn btn-glass">Scheda</button>
+              </div>
+            </section>
+
+            <!-- Tomorrow's Dinner Liquid Glass Card -->
+            <section class="glass pad-card stack-sm">
+              ${plan && featuredDinner ? `
+                <div class="row-between">
+                  <span class="eyebrow">${chosenDinner ? 'Cena confermata' : 'Proposta cena'} · ${plan.tomorrow.dayName}</span>
+                  <span class="pill tabular">${featuredDinner.kcal} kcal · ${featuredDinner.prot}g P</span>
+                </div>
+                <div class="stack-xs">
+                  <h2 class="h2">${featuredDinner.title}</h2>
+                  <p class="sub-sm">${featuredDinner.why}</p>
+                </div>
+                <div class="glass-sub pad-sub">
+                  <ul class="ing-list">
+                    ${featuredDinner.ingredients.map(i => `
+                      <li class="ing-row">
+                        <span>${i.name}</span>
+                        <strong class="tabular" style="flex-shrink:0;">${i.qty ? `${i.qty} ${i.unit}` : i.unit}</strong>
+                      </li>
+                    `).join('')}
+                  </ul>
+                </div>
+                <div class="stack-xs">
+                  <button data-ics-dinner="${featuredDinner.id}" class="btn btn-primary btn-full">${ICONS.calendar} Aggiungi al calendario iPhone</button>
+                  <button data-nav="dinner" class="btn btn-glass btn-sm btn-full">Personalizza pranzo o cambia cena</button>
+                </div>
+              ` : `
+                <div class="stack-xs" style="text-align:center;padding:10px 0;">
+                  <div class="h3">Cena di domani in attesa del peso</div>
+                  <p class="sub-xs">Inserisci il tuo peso qui sopra per calcolare calorie e ricette pronte per il calendario iPhone.</p>
+                </div>
+              `}
+            </section>
+          </div>
+        `;
+      }
+
+      function renderWorkoutTab() {
+        const ws = getWorkouts(state.training.phase);
+        const safeIdx = Math.min(ws.length - 1, Math.max(0, state.training.selectedDayIdx));
+        const activeW = ws[safeIdx];
+        const built = activeW.exercises.map(buildEx);
+
+        if (!built.some(e => e.id === state.ui.expandedExId)) {
+          const firstMain = built.find(e => e.block === 'Forza Upper' || e.block === 'Forza Gambe');
+          state.ui.expandedExId = firstMain ? firstMain.id : built[0].id;
+        }
+
+        let lastBlock = null;
+
+        return `
+          <div class="stack-md fade-in">
+            <!-- Phase + Duration Liquid Glass Controls -->
+            <div class="glass pad-sub stack-sm">
+              <div class="segmented segmented-full" style="grid-template-columns:1fr 1fr;">
+                <button data-phase="1" class="seg-btn ${state.training.phase === 1 ? 'active' : ''}">Fase 1 · Lun–Ven</button>
+                <button data-phase="2" class="seg-btn ${state.training.phase === 2 ? 'active' : ''}">Fase 2 · Lun/Mer/Ven</button>
+              </div>
+              <div class="segmented segmented-full" style="grid-template-columns:repeat(3,1fr);">
+                <button data-dur="full60" class="seg-btn ${state.training.durationMode === 'full60' ? 'active' : ''}">60 min (Obiettivo)</button>
+                <button data-dur="med30" class="seg-btn ${state.training.durationMode === 'med30' ? 'active' : ''}">30 min</button>
+                <button data-dur="quick15" class="seg-btn ${state.training.durationMode === 'quick15' ? 'active' : ''}">15 min</button>
+              </div>
+            </div>
+
+            <!-- Day Picker -->
+            <div class="${ws.length === 5 ? 'day-grid-5' : 'day-grid-3'}">
+              ${ws.map((w, idx) => {
+                const done = state.training.completedSessions.some(s => s.dayKey === w.key);
+                return `
+                  <button data-day-idx="${idx}" class="day-chip ${idx === safeIdx ? 'active' : ''}">
+                    <div class="day-name">${w.dayShort}${done ? ' ✓' : ''}</div>
+                    <div class="day-sub">${w.tag}</div>
+                  </button>
+                `;
+              }).join('')}
+            </div>
+
+            <!-- Workout Sheet -->
+            <section class="glass pad-card stack-sm">
+              <div class="stack-xs">
+                <span class="eyebrow">${activeW.dayFull} · ~${activeW.estMin} min · ${built.length} esercizi</span>
+                <h2 class="h2">${activeW.focus}</h2>
+                <p class="sub-sm">${activeW.summary}</p>
+              </div>
+
+              <button data-start-workout="${activeW.key}" class="btn btn-primary btn-full">
+                ${ICONS.play} Avvia allenamento guidato
+              </button>
+
+              <div class="stack-xs" style="padding-top:4px;">
+                ${built.map((ex, idx) => {
+                  const isOpen = state.ui.expandedExId === ex.id;
+                  const showBlock = ex.block && ex.block !== lastBlock;
+                  if (showBlock) lastBlock = ex.block;
+                  return `
+                    ${showBlock ? `
+                      <div class="block-divider">
+                        <span class="eyebrow">${ex.block}</span>
+                        <div class="block-line"></div>
+                      </div>
+                    ` : ''}
+                    <div class="ex-item ${isOpen ? 'open' : ''}">
+                      <div class="ex-head">
+                        <span class="ex-num tabular">${idx + 1}</span>
+                        <button data-toggle-ex="${ex.id}" class="ex-main-btn">
+                          <div class="ex-title">${ex.name}</div>
+                          <div class="ex-meta tabular">${ex.sets} × ${ex.type === 'time' ? ex.value + 's' : ex.value + ' rip'} · rec. ${ex.rest}s</div>
+                        </button>
+                        ${ex.track ? `
+                          <div class="lv-stepper">
+                            <button data-lv-track="${ex.track}" data-lv-delta="-1" ${ex.level <= 1 ? 'disabled' : ''}>−</button>
+                            <span class="tabular">L${ex.level}</span>
+                            <button data-lv-track="${ex.track}" data-lv-delta="1" ${ex.level >= 4 ? 'disabled' : ''}>+</button>
+                          </div>
+                        ` : ''}
+                      </div>
+                      ${isOpen ? `
+                        <div class="ex-body fade-in">
+                          ${renderAnimViewerHtml('ex-' + ex.id, ex.animKey, false)}
+                          <div class="glass-sub pad-sub stack-xs">
+                            <div class="sub-xs"><strong style="color:var(--text);">Come eseguirlo:</strong> ${ex.cue}</div>
+                            <div class="sub-xs"><strong style="color:var(--text);">Supporto:</strong> ${ex.prop || 'Nessuno'}</div>
+                            ${ex.mistake ? `<div class="sub-xs"><strong style="color:var(--warning);">Evita:</strong> ${ex.mistake}</div>` : ''}
+                          </div>
+                        </div>
+                      ` : ''}
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </section>
+          </div>
+        `;
+      }
+
+      function renderDinnerTab(plan) {
+        if (!plan) {
+          return `<div class="glass pad-card stack-xs" style="text-align:center;"><h2 class="h2">Inserisci prima il tuo peso</h2><p class="sub-sm">Inserendo il peso qui sopra calcolo subito le calorie e le cene per domani.</p></div>`;
+        }
+        const picks = getRecommendedDinners(plan);
+        const chosenId = state.nutrition.chosenDinnerByDate[plan.tomorrow.iso];
+        const chosenRecipe = getChosenDinnerForTomorrow(plan);
+        const totalBar = Math.max(plan.targetDailyKcal, plan.breakfastKcal + plan.lunchKcal + plan.dinnerBudgetKcal);
+        const bfPct = Math.round((plan.breakfastKcal / totalBar) * 100);
+        const lunchPct = Math.round((plan.lunchKcal / totalBar) * 100);
+        const dinnerPct = Math.max(12, 100 - bfPct - lunchPct);
+
+        return `
+          <div class="stack-md fade-in">
+            ${chosenRecipe ? `
+              <section class="glass pad-card stack-sm" style="border-color:rgba(0,122,255,0.45);">
+                <div class="row-between">
+                  <span class="pill pill-success">✓ Scelta per domani</span>
+                  <span class="sub-xs tabular">${chosenRecipe.kcal} kcal · ${chosenRecipe.prot}g P</span>
+                </div>
+                <h2 class="h2">${chosenRecipe.title}</h2>
+                <div class="form-2col">
+                  <div>
+                    <label class="field-label" for="inp-cal-name">Calendario iPhone</label>
+                    <input id="inp-cal-name" class="input" type="text" value="${state.nutrition.calendarName}" />
+                  </div>
+                  <div>
+                    <label class="field-label" for="inp-dinner-time">Ora cena</label>
+                    <input id="inp-dinner-time" class="input tabular" type="time" value="${state.nutrition.dinnerTime}" />
+                  </div>
+                </div>
+                <label class="row sub-xs" style="cursor:pointer;">
+                  <input id="chk-reminder-2h" type="checkbox" ${state.nutrition.reminder2h ? 'checked' : ''} style="width:17px;height:17px;accent-color:var(--accent);" />
+                  <span>Promemoria 2 ore prima (spesa e preparazione)</span>
+                </label>
+                <button data-ics-dinner="${chosenRecipe.id}" class="btn btn-primary btn-full">
+                  ${ICONS.calendar} Aggiungi al calendario iPhone
+                </button>
+              </section>
+            ` : ''}
+
+            <!-- Calorie Budget Card -->
+            <section class="glass pad-card stack-sm">
+              <div class="row-between">
+                <div>
+                  <div class="eyebrow">Piano cena di domani</div>
+                  <h2 class="h2" style="text-transform:capitalize;margin-top:2px;">${plan.tomorrow.dateLabel}</h2>
+                </div>
+                <div style="text-align:right;">
+                  <div class="eyebrow">Target</div>
+                  <div class="tabular" style="font-size:20px;font-weight:700;">${plan.targetDailyKcal} kcal</div>
+                </div>
+              </div>
+              <p class="sub-xs">
+                ${plan.tomorrow.isWorkoutDay
+                  ? `Domani ti alleni (~${plan.tomorrow.workout.estMin} min): +${plan.workoutBonus} kcal extra per energia e muscoli.`
+                  : 'Domani giorno di riposo: focus su proteine e sazietà.'}
+              </p>
+
+              <div class="stack-xs">
+                <div class="eyebrow">Pranzo fuori casa previsto domani</div>
+                ${Object.entries(LUNCH_PRESETS).map(([k, o]) => `
+                  <label class="radio-tile ${state.nutrition.lunchPreset === k ? 'active' : ''}">
+                    <input type="radio" name="lunchPreset" value="${k}" ${state.nutrition.lunchPreset === k ? 'checked' : ''} />
+                    <div>
+                      <div style="font-size:13.5px;font-weight:600;">${o.label}</div>
+                      <div class="sub-xs">${o.desc}</div>
+                    </div>
+                  </label>
+                `).join('')}
+              </div>
+
+              <div class="stack-xs">
+                <div class="eyebrow">Colazione &amp; spuntini</div>
+                <div class="segmented segmented-full" style="grid-template-columns:repeat(3,1fr);">
+                  ${Object.entries(BREAKFAST_PRESETS).map(([k, o]) => `
+                    <button data-bf="${k}" class="seg-btn ${state.nutrition.breakfastPreset === k ? 'active' : ''}" style="font-size:11.5px;padding:8px 4px;">${k === 'coffee' ? 'Caffè ~60' : (k === 'light' ? 'Leggera ~260' : 'Completa ~420')}</button>
+                  `).join('')}
+                </div>
+              </div>
+
+              <div class="glass-sub pad-sub stack-xs">
+                <div class="row-between">
+                  <div>
+                    <div class="sub-xs">Budget rimasto per la cena</div>
+                    <div class="tabular" style="font-size:22px;font-weight:700;color:var(--accent);">${plan.dinnerBudgetKcal} kcal</div>
+                  </div>
+                  <div style="text-align:right;">
+                    <div class="sub-xs">Proteine cena</div>
+                    <div class="tabular" style="font-size:17px;font-weight:700;">~${plan.dinnerProtTarget} g</div>
+                  </div>
+                </div>
+                <div class="cal-bar">
+                  <div style="width:${bfPct}%;background:#38bdf8;"></div>
+                  <div style="width:${lunchPct}%;background:var(--warning);"></div>
+                  <div style="width:${dinnerPct}%;background:var(--success);"></div>
+                </div>
+                <div class="row-between sub-xs tabular">
+                  <span>Colaz. ${plan.breakfastKcal}</span>
+                  <span>Pranzo ${plan.lunchKcal}</span>
+                  <strong style="color:var(--text);">Cena ${plan.dinnerBudgetKcal}</strong>
+                </div>
+              </div>
+            </section>
+
+            <!-- Filters + Shuffle -->
+            <div class="row-between">
+              <div class="chip-scroll" style="flex:1;">
+                ${[
+                  { id: 'all', l: 'Tutte' },
+                  { id: 'fast', l: '≤15 min' },
+                  { id: 'nocook', l: 'Senza fornelli' },
+                  { id: 'lowcarb', l: 'Low-carb' },
+                  { id: 'veg', l: 'Veg' }
+                ].map(f => `<button data-dinner-filter="${f.id}" class="chip ${state.nutrition.dinnerFilter === f.id ? 'active' : ''}">${f.l}</button>`).join('')}
+              </div>
+              <button id="btn-shuffle-dinners" class="btn btn-glass btn-sm" style="flex-shrink:0;">${ICONS.refresh} Cambia</button>
+            </div>
+
+            <!-- 3 Dinner Cards -->
+            <div class="stack-sm">
+              ${picks.map(rec => {
+                const isChosen = chosenId === rec.id;
+                return `
+                  <article class="glass pad-card stack-sm" style="${isChosen ? 'border-color:rgba(0,122,255,0.5);' : ''}">
+                    <div class="row-between">
+                      <span class="sub-xs">${rec.prepMin} min</span>
+                      <span class="pill tabular">${rec.kcal} kcal</span>
+                    </div>
+                    <div class="stack-xs">
+                      <h3 class="h2" style="font-size:17px;">${rec.title}</h3>
+                      <p class="sub-xs">${rec.why}</p>
+                    </div>
+                    <div class="macro-grid tabular">
+                      <div class="macro-box"><div class="macro-val">${rec.prot}g</div><div class="macro-lbl">Proteine</div></div>
+                      <div class="macro-box"><div class="macro-val">${rec.carb}g</div><div class="macro-lbl">Carbo</div></div>
+                      <div class="macro-box"><div class="macro-val">${rec.fat}g</div><div class="macro-lbl">Grassi</div></div>
+                    </div>
+                    <div class="glass-sub pad-sub">
+                      <ul class="ing-list">
+                        ${rec.ingredients.map(i => `
+                          <li class="ing-row">
+                            <span>${i.name}</span>
+                            <strong class="tabular" style="flex-shrink:0;">${i.qty ? `${i.qty} ${i.unit}` : i.unit}</strong>
+                          </li>
+                        `).join('')}
+                      </ul>
+                    </div>
+                    <p class="sub-xs"><strong style="color:var(--text);">Preparazione:</strong> ${rec.steps}</p>
+                    <button data-choose-and-ics="${rec.id}" class="btn ${isChosen ? 'btn-success' : 'btn-primary'} btn-full">
+                      ${ICONS.calendar} ${isChosen ? 'Scelta · Aggiungi al calendario iPhone' : 'Aggiungi al calendario iPhone'}
+                    </button>
+                  </article>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      function renderProgressTab() {
+        const firstW = state.weightHistory.length ? state.weightHistory[0].kg : null;
+        const curW = state.profile.weightKg;
+        const deltaW = (firstW && curW) ? +(curW - firstW).toFixed(1) : null;
+
+        return `
+          <div class="stack-md fade-in">
+            <!-- Weight Card -->
+            <section class="glass pad-card stack-sm">
+              <div class="row-between">
+                <div>
+                  <div class="eyebrow">Monitoraggio</div>
+                  <h2 class="h2">Andamento Peso</h2>
+                </div>
+                ${deltaW !== null ? `<span class="pill ${deltaW <= 0 ? 'pill-success' : ''} tabular">${deltaW > 0 ? '+' : ''}${deltaW} kg</span>` : ''}
+              </div>
+              ${renderWeightChartSvg()}
+              <form id="log-weight-form" class="row">
+                <input id="inp-log-weight" class="input tabular" type="number" step="0.1" min="40" max="220" required value="${curW || ''}" placeholder="Peso oggi (kg)" inputmode="decimal" style="flex:1;" />
+                <button type="submit" class="btn btn-primary">Salva</button>
+              </form>
+            </section>
+
+            <!-- Upper Body Levels -->
+            <section class="glass pad-card stack-sm">
+              <div>
+                <div class="eyebrow">Forza Parte Superiore</div>
+                <h2 class="h2">Progressioni (0 attrezzi)</h2>
+              </div>
+              <div class="stack-xs">
+                ${[
+                  { k: 'push', l: 'Spinta (Petto & Tricipiti)' },
+                  { k: 'pull', l: 'Tirata (Schiena & Bicipiti)' },
+                  { k: 'shoulders', l: 'Spalle (Deltoidi)' },
+                  { k: 'core', l: 'Core & Stabilità' }
+                ].map(tr => {
+                  const lv = state.training.levels[tr.k] || 1;
+                  const prog = Engine.PROGRESSIONS[tr.k][lv - 1];
+                  return `
+                    <div class="glass-sub pad-sub stack-xs">
+                      <div class="row-between">
+                        <div style="min-width:0;">
+                          <div class="h3">${tr.l}</div>
+                          <div class="sub-xs">${prog.name}</div>
+                        </div>
+                        <div class="lv-stepper">
+                          <button data-lv-track="${tr.k}" data-lv-delta="-1" ${lv <= 1 ? 'disabled' : ''}>−</button>
+                          <span class="tabular">L${lv}</span>
+                          <button data-lv-track="${tr.k}" data-lv-delta="1" ${lv >= 4 ? 'disabled' : ''}>+</button>
+                        </div>
+                      </div>
+                      <div class="bar-4">
+                        ${[1, 2, 3, 4].map(n => `<div class="bar-seg ${n <= lv ? 'on' : ''}"></div>`).join('')}
+                      </div>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </section>
+
+            <!-- Settings -->
+            <section class="glass pad-card stack-sm">
+              <h2 class="h2">Profilo &amp; Calendario</h2>
+              <form id="profile-settings-form" class="stack-sm">
+                <div class="form-2col">
+                  <div>
+                    <label class="field-label">Altezza (cm)</label>
+                    <input id="set-height" class="input tabular" type="number" min="130" max="220" value="${state.profile.heightCm}" inputmode="numeric" />
+                  </div>
+                  <div>
+                    <label class="field-label">Età</label>
+                    <input id="set-age" class="input tabular" type="number" min="15" max="85" value="${state.profile.age}" inputmode="numeric" />
+                  </div>
+                </div>
+                <div class="form-2col">
+                  <div>
+                    <label class="field-label">Profilo metabolico</label>
+                    <select id="set-sex" class="input">
+                      <option value="neutral" ${state.profile.sex === 'neutral' ? 'selected' : ''}>Standard</option>
+                      <option value="male" ${state.profile.sex === 'male' ? 'selected' : ''}>Uomo</option>
+                      <option value="female" ${state.profile.sex === 'female' ? 'selected' : ''}>Donna</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="field-label">Calendario iPhone</label>
+                    <input id="set-cal-name" class="input" type="text" value="${state.nutrition.calendarName}" />
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-glass btn-full">Salva impostazioni</button>
+              </form>
+              <div class="row-between sub-xs" style="padding-top:4px;">
+                <label class="row" style="cursor:pointer;">
+                  <input id="chk-sound" type="checkbox" ${state.training.soundEnabled ? 'checked' : ''} style="width:17px;height:17px;accent-color:var(--accent);" />
+                  <span>Suoni timer</span>
+                </label>
+                <button id="btn-reset-all" style="border:none;background:none;color:var(--danger);font-size:12px;font-weight:600;cursor:pointer;">Azzera dati</button>
+              </div>
+            </section>
+
+            <!-- Recent workouts -->
+            <section class="glass pad-card stack-sm">
+              <div class="row-between">
+                <h2 class="h2">Storico Allenamenti</h2>
+                <span class="pill tabular">${state.training.completedSessions.length} totali</span>
+              </div>
+              ${state.training.completedSessions.length === 0 ? `
+                <p class="sub-xs">Nessun allenamento ancora registrato. Completa la tua prima sessione nella scheda <strong>Allena</strong>!</p>
+              ` : `
+                <div class="stack-xs">
+                  ${state.training.completedSessions.slice(0, 8).map(s => `
+                    <div class="glass-sub pad-sub row-between">
+                      <div>
+                        <div class="h3">${s.title}</div>
+                        <div class="sub-xs">${s.date} · Fase ${s.phase} · ${s.effort}</div>
+                      </div>
+                      <div style="text-align:right;" class="tabular">
+                        <div style="font-size:13px;font-weight:700;">${s.durationMin} min</div>
+                        <div class="sub-xs">~${s.kcalEst} kcal</div>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              `}
+            </section>
+          </div>
+        `;
+      }
+
+      // ──────────────────────────────────────────────────────────────
+      // MAIN RENDER & TAB BAR
+      // ──────────────────────────────────────────────────────────────
+      function renderTabBar() {
+        const tabs = [
+          { id: 'today', label: 'Oggi', icon: ICONS.home },
+          { id: 'workout', label: 'Allena', icon: ICONS.dumbbell },
+          { id: 'dinner', label: 'Cena', icon: ICONS.utensils },
+          { id: 'progress', label: 'Progressi', icon: ICONS.chart }
+        ];
+        const bar = document.getElementById('tabbar');
+        bar.innerHTML = tabs.map(t => `
+          <button data-nav="${t.id}" class="tab-btn ${state.ui.activeTab === t.id ? 'active' : ''}">
+            ${t.icon}
+            <span>${t.label}</span>
+          </button>
+        `).join('');
+        bar.querySelectorAll('[data-nav]').forEach(btn => {
+          btn.onclick = () => {
+            state.ui.activeTab = btn.dataset.nav;
+            saveState(state);
+            render();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          };
+        });
+      }
+
+      function render() {
+        const plan = calculateNutritionPlan();
+        const root = document.getElementById('app');
+        const themeLabel = state.ui.theme === 'dark' ? 'Scuro' : (state.ui.theme === 'light' ? 'Chiaro' : 'Auto');
+        const themeIcon = state.ui.theme === 'dark' ? ICONS.moon : ICONS.sun;
+
+        let bodyHtml = '';
+        if (state.ui.activeTab === 'today') bodyHtml = renderTodayTab(plan);
+        else if (state.ui.activeTab === 'workout') bodyHtml = renderWorkoutTab();
+        else if (state.ui.activeTab === 'dinner') bodyHtml = renderDinnerTab(plan);
+        else bodyHtml = renderProgressTab();
+
+        root.innerHTML = `
+          <header class="topbar">
+            <div>
+              <h1 class="h1">Preparatore</h1>
+              <div class="sub-xs">Casa · 0 attrezzi · ${state.profile.heightCm} cm${state.profile.weightKg ? ` · ${state.profile.weightKg} kg` : ''}</div>
+            </div>
+            <button id="btn-cycle-theme" class="theme-btn" aria-label="Cambia tema">
+              ${themeIcon}<span>${themeLabel}</span>
+            </button>
+          </header>
+
+          <div class="stack-md">
+            ${!state.profile.weightKg ? renderWeightPromptBanner() : ''}
+            ${bodyHtml}
+          </div>
+
+          <p class="sub-xs" style="text-align:center;margin-top:22px;opacity:0.75;">
+            Dati salvati solo sul tuo iPhone · Stime orientative per adulti sani.
+          </p>
+        `;
+
+        renderTabBar();
+        bindEvents(plan);
+        bindAnimViewerControls(root);
+      }
+
+      function recordWeight(val) {
+        const kg = parseFloat(val);
+        if (isNaN(kg) || kg < 35 || kg > 250) return;
+        const r = Math.round(kg * 10) / 10;
+        state.profile.weightKg = r;
+        const todayIso = new Date().toISOString().slice(0, 10);
+        const idx = state.weightHistory.findIndex(p => p.date === todayIso);
+        if (idx >= 0) state.weightHistory[idx].kg = r;
+        else state.weightHistory.push({ date: todayIso, kg: r });
+        saveState(state);
+      }
+
+      function bindEvents(plan) {
+        const btnTheme = document.getElementById('btn-cycle-theme');
+        if (btnTheme) {
+          btnTheme.onclick = () => {
+            const order = ['auto', 'light', 'dark'];
+            state.ui.theme = order[(order.indexOf(state.ui.theme || 'auto') + 1) % order.length];
+            applyTheme();
+            saveState(state);
+            render();
+          };
+        }
+
+        document.querySelectorAll('#app [data-nav]').forEach(el => {
+          el.onclick = () => { state.ui.activeTab = el.dataset.nav; saveState(state); render(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+        });
+
+        const qf = document.getElementById('quick-weight-form');
+        if (qf) {
+          qf.onsubmit = (e) => {
+            e.preventDefault();
+            const age = parseInt(document.getElementById('inp-quick-age').value, 10);
+            if (age >= 15 && age <= 85) state.profile.age = age;
+            state.profile.sex = document.getElementById('inp-quick-sex').value;
+            recordWeight(document.getElementById('inp-quick-weight').value);
+            showToast('Piano calorico e cene attivati!');
+            render();
+          };
+        }
+
+        const lf = document.getElementById('log-weight-form');
+        if (lf) {
+          lf.onsubmit = (e) => {
+            e.preventDefault();
+            recordWeight(document.getElementById('inp-log-weight').value);
+            showToast('Peso salvato!');
+            render();
+          };
+        }
+
+        const pf = document.getElementById('profile-settings-form');
+        if (pf) {
+          pf.onsubmit = (e) => {
+            e.preventDefault();
+            const h = parseInt(document.getElementById('set-height').value, 10);
+            const a = parseInt(document.getElementById('set-age').value, 10);
+            const cn = document.getElementById('set-cal-name').value.trim();
+            if (h >= 130 && h <= 220) state.profile.heightCm = h;
+            if (a >= 15 && a <= 85) state.profile.age = a;
+            if (cn) state.nutrition.calendarName = cn;
+            state.profile.sex = document.getElementById('set-sex').value;
+            saveState(state);
+            showToast('Impostazioni salvate!');
+            render();
+          };
+        }
+
+        const chkS = document.getElementById('chk-sound');
+        if (chkS) chkS.onchange = () => { state.training.soundEnabled = chkS.checked; saveState(state); };
+        const btnR = document.getElementById('btn-reset-all');
+        if (btnR) btnR.onclick = () => { state = createDefaultState(); applyTheme(); saveState(state); render(); };
+
+        document.querySelectorAll('[data-phase]').forEach(b => {
+          b.onclick = () => { state.training.phase = parseInt(b.dataset.phase, 10); state.training.selectedDayIdx = 0; saveState(state); render(); };
+        });
+        document.querySelectorAll('[data-dur]').forEach(b => {
+          b.onclick = () => { state.training.durationMode = b.dataset.dur; saveState(state); render(); };
+        });
+        document.querySelectorAll('[data-day-idx]').forEach(b => {
+          b.onclick = () => { state.training.selectedDayIdx = parseInt(b.dataset.dayIdx, 10); saveState(state); render(); };
+        });
+        document.querySelectorAll('[data-toggle-ex]').forEach(b => {
+          b.onclick = () => { const id = b.dataset.toggleEx; state.ui.expandedExId = state.ui.expandedExId === id ? null : id; render(); };
+        });
+        document.querySelectorAll('[data-lv-track]').forEach(b => {
+          b.onclick = () => {
+            const tr = b.dataset.lvTrack;
+            state.training.levels[tr] = Math.min(4, Math.max(1, (state.training.levels[tr] || 1) + parseInt(b.dataset.lvDelta, 10)));
+            saveState(state);
+            render();
+          };
+        });
+        document.querySelectorAll('[data-start-workout]').forEach(b => {
+          b.onclick = () => {
+            const key = b.dataset.startWorkout;
+            const all = [...getWorkouts(1), ...getWorkouts(2)];
+            const w = all.find(x => x.key === key);
+            if (w) startLiveWorkout(w);
+          };
+        });
+        document.querySelectorAll('input[name="lunchPreset"]').forEach(r => {
+          r.onchange = () => { state.nutrition.lunchPreset = r.value; saveState(state); render(); };
+        });
+        document.querySelectorAll('[data-bf]').forEach(b => {
+          b.onclick = () => { state.nutrition.breakfastPreset = b.dataset.bf; saveState(state); render(); };
+        });
+        document.querySelectorAll('[data-dinner-filter]').forEach(b => {
+          b.onclick = () => { state.nutrition.dinnerFilter = b.dataset.dinnerFilter; saveState(state); render(); };
+        });
+        const shuf = document.getElementById('btn-shuffle-dinners');
+        if (shuf) shuf.onclick = () => { state.nutrition.recipeOffset = (state.nutrition.recipeOffset || 0) + 1; saveState(state); render(); };
+
+        document.querySelectorAll('[data-choose-and-ics]').forEach(b => {
+          b.onclick = () => {
+            if (!plan) return;
+            const id = b.dataset.chooseAndIcs;
+            const base = Engine.DINNER_RECIPES.find(r => r.id === id);
+            if (!base) return;
+            state.nutrition.chosenDinnerByDate[plan.tomorrow.iso] = id;
+            saveState(state);
+            render();
+            downloadDinnerIcs(scaleRecipe(base, plan.dinnerBudgetKcal), plan.tomorrow);
+          };
+        });
+        document.querySelectorAll('[data-ics-dinner]').forEach(b => {
+          b.onclick = () => {
+            if (!plan) return;
+            const base = Engine.DINNER_RECIPES.find(r => r.id === b.dataset.icsDinner);
+            if (!base) return;
+            downloadDinnerIcs(scaleRecipe(base, plan.dinnerBudgetKcal), plan.tomorrow);
+          };
+        });
+
+        const inpCal = document.getElementById('inp-cal-name');
+        if (inpCal) inpCal.onchange = () => { state.nutrition.calendarName = inpCal.value.trim() || 'cena'; saveState(state); render(); };
+        const inpTime = document.getElementById('inp-dinner-time');
+        if (inpTime) inpTime.onchange = () => { state.nutrition.dinnerTime = inpTime.value || '20:00'; saveState(state); };
+        const chkRem = document.getElementById('chk-reminder-2h');
+        if (chkRem) chkRem.onchange = () => { state.nutrition.reminder2h = chkRem.checked; saveState(state); };
+      }
+
+      // Register offline Service Worker
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js').catch(() => {});
+        });
+      }
+
+      restartGlobalAnimClock();
+      render();
+    })();
+  </script>
+</body>
+</html>
