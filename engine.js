@@ -132,6 +132,11 @@ window.PrepEngine = (function () {
               <stop offset="0%" stop-color="#6b4932"/>
               <stop offset="100%" stop-color="#3b2618"/>
             </linearGradient>
+            <linearGradient id="${idPfx}-bag" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#7b8494"/>
+              <stop offset="55%" stop-color="#525b6b"/>
+              <stop offset="100%" stop-color="#363d4a"/>
+            </linearGradient>
             <radialGradient id="${idPfx}-shadow" cx="50%" cy="50%" r="50%">
               <stop offset="0%" stop-color="#1e293b" stop-opacity="0.22"/>
               <stop offset="100%" stop-color="#1e293b" stop-opacity="0"/>
@@ -200,6 +205,16 @@ window.PrepEngine = (function () {
             <text x="208" y="25" text-anchor="middle" fill="#475569" font-size="7.5" font-weight="600">PORTA</text>
           `;
         }
+        if (propType === 'stool') {
+          return `
+            ${bg}${floorLine}
+            <rect x="110" y="124" width="5" height="26" rx="1" fill="#b6c2d4"/>
+            <rect x="146" y="124" width="5" height="26" rx="1" fill="#cbd5e1"/>
+            <rect x="104" y="118" width="52" height="7" rx="2" fill="#242933"/>
+            <rect x="104" y="118" width="52" height="2.5" rx="1.2" fill="#3a4150"/>
+            <text x="206" y="142" text-anchor="middle" fill="#64748b" font-size="7.5" font-weight="600">SEDIA BASSA</text>
+          `;
+        }
         if (propType === 'mat') {
           return `
             ${bg}${floorLine}
@@ -228,6 +243,27 @@ window.PrepEngine = (function () {
             </g>
           `;
         }).join('');
+      }
+
+      // Loaded backpack used as zero-cost dumbbell (books / water bottles inside)
+      function renderBackpack(bp, idPfx) {
+        if (!bp) return '';
+        const w = 24, h = 27;
+        const cx = bp.x;
+        const top = bp.mode === 'held' ? bp.y - h / 2 : bp.y + 4;
+        const left = cx - w / 2;
+        const handle = bp.mode === 'held' ? '' : `
+          <path d="M ${cx - 4},${top + 1} Q ${cx},${bp.y - 3} ${cx + 4},${top + 1}" fill="none" stroke="#2b313c" stroke-width="2.2" stroke-linecap="round"/>`;
+        return `
+          <g>
+            ${handle}
+            <rect x="${left}" y="${top}" width="${w}" height="${h}" rx="7" fill="url(#${idPfx}-bag)" stroke="#2b313c" stroke-width="0.8"/>
+            <rect x="${left + 2}" y="${top + 2}" width="5" height="${h - 6}" rx="2.5" fill="#ffffff" opacity="0.12"/>
+            <rect x="${left + 4}" y="${top + h * 0.48}" width="${w - 8}" height="${h * 0.42}" rx="4" fill="#3d4553" stroke="#2b313c" stroke-width="0.6"/>
+            <line x1="${left + 6}" y1="${top + h * 0.48 + 2.5}" x2="${left + w - 6}" y2="${top + h * 0.48 + 2.5}" stroke="#f59e0b" stroke-width="1.1" stroke-linecap="round"/>
+            <circle cx="${left + w - 6}" cy="${top + h * 0.48 + 2.5}" r="1.3" fill="#fbbf24"/>
+            <text x="${cx}" y="${top + 10}" text-anchor="middle" fill="#e2e8f0" font-size="5.5" font-weight="700">${bp.kg || 'ZAINO'}</text>
+          </g>`;
       }
 
       function renderFigureSvg(pose, idPfx) {
@@ -331,6 +367,7 @@ window.PrepEngine = (function () {
             ` : ''}
 
             ${towelSvg}
+            ${p.backpack && p.backpack.layer === 'back' ? renderBackpack(p.backpack, idPfx) : ''}
 
             <!-- Neck & Head -->
             ${taperedLimb(p.sh, neckEnd, 4.4, 4.0, `url(#${idPfx}-skin)`)}
@@ -348,6 +385,7 @@ window.PrepEngine = (function () {
             <!-- Crisp white athletic stripe on shorts -->
             <line x1="${(p.hip[0] + sxL).toFixed(1)}" y1="${(p.hip[1] + syL).toFixed(1)}" x2="${(shortEndF[0] + sxL).toFixed(1)}" y2="${(shortEndF[1] + syL).toFixed(1)}" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" opacity="0.92"/>
 
+            ${p.backpack && p.backpack.layer !== 'back' ? renderBackpack(p.backpack, idPfx) : ''}
             <!-- Front arm: Cobalt blue short sleeve + warm sunlit skin + hand -->
             ${taperedLimb(sleeveF, p.elF, 4.3, 3.8, `url(#${idPfx}-skin)`)}
             ${taperedLimb(p.elF, p.haF, 3.7, 2.8, `url(#${idPfx}-skin)`)}
@@ -644,14 +682,95 @@ window.PrepEngine = (function () {
             { frontView: true, label: 'Apri bene le braccia a T aprendo il torace', head: [140, 36], shL: [124, 54], shR: [156, 54], hipL: [130, 96], hipR: [150, 96], elL: [100, 54], haL: [78, 54], elR: [180, 54], haR: [202, 54], kneeL: [132, 122], footL: [130, 145], kneeR: [148, 122], footR: [150, 145] },
             { frontView: true, label: 'Porta le braccia in alto ruotando dolcemente polsi e spalle', head: [140, 36], shL: [124, 54], shR: [156, 54], hipL: [130, 96], hipR: [150, 96], elL: [110, 32], haL: [118, 14], elR: [170, 32], haR: [162, 14], kneeL: [132, 122], footL: [130, 145], kneeR: [148, 122], footR: [150, 145] }
           ]
+        },
+        // ── FOCUS BRACCIA (0 attrezzi: zaino carico) ──
+        backpack_curl: {
+          prop: 'floor',
+          badge: 'ZAINO CARICO · GOMITI FERMI',
+          sequence: [0, 1, 2, 1],
+          stepLabels: ['1. Braccia distese', '2. Mezza flessione', '3. Bicipiti al petto', '4. Discesa lenta'],
+          frames: [
+            { label: 'In piedi, zaino afferrato per la maniglia, braccia distese e gomiti incollati ai fianchi', faceDir: 1, head: [134, 36], sh: [132, 54], hip: [130, 96], kneeF: [135, 120], footF: [139, 145], kneeB: [128, 121], footB: [126, 145], elF: [135, 80], haF: [141, 103], elB: [138, 79], haB: [143, 102], backpack: { x: 142, y: 104 }, arrow: { x1: 178, y1: 106, x2: 178, y2: 80 } },
+            { label: 'Mezza flessione: avambracci paralleli al pavimento, il gomito NON si sposta', faceDir: 1, head: [134, 36], sh: [132, 54], hip: [130, 96], kneeF: [135, 120], footF: [139, 145], kneeB: [128, 121], footB: [126, 145], elF: [135, 80], haF: [158, 76], elB: [138, 79], haB: [160, 75], backpack: { x: 159, y: 77 }, arrow: { x1: 184, y1: 84, x2: 178, y2: 60 } },
+            { label: 'Contrazione: zaino verso il petto, stringi i bicipiti 1s, poi scendi in 3 secondi', faceDir: 1, head: [134, 36], sh: [132, 54], hip: [130, 96], kneeF: [135, 120], footF: [139, 145], kneeB: [128, 121], footB: [126, 145], elF: [136, 79], haF: [150, 59], elB: [139, 78], haB: [152, 58], backpack: { x: 151, y: 60 }, arrow: { x1: 182, y1: 60, x2: 182, y2: 94 } }
+          ]
+        },
+        backpack_tricep_ext: {
+          prop: 'stool',
+          badge: 'ZAINO · GOMITI VICINO ALLE ORECCHIE',
+          sequence: [0, 1, 2, 1],
+          stepLabels: ['1. Zaino in alto', '2. Mezza discesa', '3. Dietro la nuca', '4. Spinta su'],
+          frames: [
+            { label: 'Seduto, schiena dritta: zaino tenuto con due mani sopra la testa, braccia tese', faceDir: 1, head: [133, 58], sh: [131, 76], hip: [130, 116], kneeF: [154, 117], footF: [157, 145], kneeB: [151, 118], footB: [153, 145], elF: [140, 51], haF: [143, 27], elB: [137, 51], haB: [140, 27], backpack: { x: 142, y: 20, mode: 'held', layer: 'back' }, arrow: { x1: 176, y1: 26, x2: 176, y2: 52 } },
+            { label: 'Piega solo i gomiti: lo zaino scende dietro la testa, gomiti puntati in alto', faceDir: 1, head: [133, 58], sh: [131, 76], hip: [130, 116], kneeF: [154, 117], footF: [157, 145], kneeB: [151, 118], footB: [153, 145], elF: [140, 51], haF: [118, 46], elB: [137, 51], haB: [115, 46], backpack: { x: 116, y: 42, mode: 'held', layer: 'back' }, arrow: { x1: 176, y1: 40, x2: 176, y2: 64 } },
+            { label: 'Punto basso dietro la nuca: allungamento dei tricipiti, poi spingi su fino a braccia tese', faceDir: 1, head: [133, 58], sh: [131, 76], hip: [130, 116], kneeF: [154, 117], footF: [157, 145], kneeB: [151, 118], footB: [153, 145], elF: [140, 52], haF: [124, 72], elB: [137, 52], haB: [121, 72], backpack: { x: 121, y: 76, mode: 'held', layer: 'back' }, arrow: { x1: 176, y1: 72, x2: 176, y2: 30 } }
+          ]
         }
       };
 
+      // Close-grip (triceps) push-ups: same body path as the push levels,
+      // but elbows stay tucked toward the hips (2-bone IK on the arm).
+      function ikElbow(sh, ha, L, toward) {
+        const dx = ha[0] - sh[0], dy = ha[1] - sh[1];
+        const d = Math.hypot(dx, dy) || 1;
+        const mid = [(sh[0] + ha[0]) / 2, (sh[1] + ha[1]) / 2];
+        if (d >= 2 * L) return [Math.round(mid[0]), Math.round(mid[1])];
+        const off = Math.sqrt(L * L - (d / 2) * (d / 2));
+        let nx = -dy / d, ny = dx / d;
+        if ((toward[0] - sh[0]) * nx + (toward[1] - sh[1]) * ny < 0) { nx = -nx; ny = -ny; }
+        return [Math.round(mid[0] + nx * off), Math.round(mid[1] + ny * off)];
+      }
+      function makeClosePush(baseKey, L, stepLabels, labels) {
+        const base = ANIMATIONS[baseKey];
+        return {
+          prop: base.prop,
+          badge: 'PRESA STRETTA · GOMITI AI FIANCHI',
+          sequence: base.sequence.slice(),
+          stepLabels,
+          frames: base.frames.map((f, i) => {
+            const nf = Object.assign({}, f, { label: labels[i] });
+            nf.elF = ikElbow(f.sh, f.haF, L, f.hip);
+            if (f.haB) nf.elB = ikElbow(f.sh, f.haB, L, f.hip);
+            return nf;
+          })
+        };
+      }
+      ANIMATIONS.close_push_lv1 = makeClosePush('push_lv1', 31,
+        ['1. Mani vicine', '2. Gomiti stretti', '3. Petto al muro', '4. Spinta tricipiti'],
+        ['Mani al muro vicine tra loro (larghezza spalle o meno), braccia tese',
+         'Scendi tenendo i gomiti che sfiorano le costole, puntati verso il basso',
+         'Petto vicino al muro, gomiti ancora stretti: spingi con i tricipiti']);
+      ANIMATIONS.close_push_lv2 = makeClosePush('push_lv2', 23,
+        ['1. Mani strette', '2. Gomiti ai fianchi', '3. Petto al bordo', '4. Spinta su'],
+        ['Mani strette sul bordo del tavolo, corpo dritto come una tavola',
+         'Gomiti che scivolano indietro lungo i fianchi, non verso l\'esterno',
+         'Sterno vicino al bordo, poi distendi le braccia spingendo forte']);
+      ANIMATIONS.close_push_lv3 = makeClosePush('push_lv3', 24.5,
+        ['1. Mani strette', '2. Gomiti indietro', '3. Petto basso', '4. Risalita'],
+        ['Sulle ginocchia, mani sotto il petto vicine tra loro',
+         'Scendi con i gomiti che puntano verso i piedi, attaccati al busto',
+         'Petto vicino a terra, spingi con i tricipiti mantenendo il corpo in linea']);
+      ANIMATIONS.close_push_lv4 = makeClosePush('push_lv4', 24.5,
+        ['1. Mani a diamante', '2. Gomiti stretti', '3. Petto alle mani', '4. Spinta'],
+        ['Plank alto con pollici e indici che formano un diamante sotto lo sterno',
+         'Discesa lenta: gomiti stretti ai fianchi, corpo rigido',
+         'Petto vicino alle mani, poi spingi esplosivo con i tricipiti']);
+
       const animViewers = {};
+
+      function renderBadgeSvg(text) {
+        if (!text) return '';
+        const w = Math.round(text.length * 4.6 + 14);
+        return `
+          <g>
+            <rect x="10" y="153" width="${w}" height="14" rx="7" fill="#ffffff" opacity="0.88" stroke="#c7d2fe" stroke-width="0.8"/>
+            <text x="${10 + w / 2}" y="162.6" text-anchor="middle" fill="#2f54c9" font-size="7.2" font-weight="700" letter-spacing="0.2">${text}</text>
+          </g>`;
+      }
 
       function buildAnimSvgInner(viewerId, anim, frame) {
         const pfx = viewerId.replace(/[^a-zA-Z0-9_-]/g, '');
-        return `${renderSvgDefs(pfx)}${renderPropSvg(anim.prop, pfx)}${renderFigureSvg(frame, pfx)}${renderArrowSvg(frame.arrow)}`;
+        return `${renderSvgDefs(pfx)}${renderPropSvg(anim.prop, pfx)}${renderFigureSvg(frame, pfx)}${renderArrowSvg(frame.arrow)}${renderBadgeSvg(anim.badge)}`;
       }
 
 
@@ -679,8 +798,68 @@ window.PrepEngine = (function () {
           { lv: 2, name: 'Plank sui gomiti classico', animKey: 'core_lv2', target: '3 × 25–30 sec', sec: 25, prop: 'Pavimento', cue: 'Gomiti sotto le spalle, sguardo tra le mani, respirazione regolare senza andare in apnea.' },
           { lv: 3, name: 'Plank con Shoulder Taps', animKey: 'shoulder_taps', target: '3 × 35 sec', sec: 35, prop: 'Pavimento', cue: 'In plank sulle mani, tocca lentamente la spalla opposta mantenendo i fianchi fermissimi.' },
           { lv: 4, name: 'Plank dinamico (su/giù sui gomiti)', animKey: 'core_lv4', target: '3 × 40 sec', sec: 40, prop: 'Pavimento', cue: 'Alterna appoggio gomiti e mani con controllo: allena core, tricipiti e spalle insieme.' }
+        ],
+        biceps: [
+          { lv: 1, name: 'Curl bicipiti con zaino leggero (3–4 kg)', animKey: 'backpack_curl', target: '3–4 × 12 rip', reps: 12, prop: 'Zaino con 2 bottiglie d\'acqua da 1,5 L (≈ 3–4 kg)', cue: 'Afferra la maniglia con due mani, gomiti incollati ai fianchi. Sali in 1 secondo, stringi in alto, scendi in 3 secondi senza dondolare.' },
+          { lv: 2, name: 'Curl bicipiti con zaino medio (5–7 kg)', animKey: 'backpack_curl', target: '3–4 × 12 rip', reps: 12, prop: 'Zaino con 4 bottiglie da 1,5 L o libri (≈ 6 kg)', cue: 'Stesso movimento, più carico. Se le ultime 2 ripetizioni non sono faticose, aggiungi un altro libro.' },
+          { lv: 3, name: 'Curl lento con zaino (7–10 kg, discesa 4s)', animKey: 'backpack_curl', target: '4 × 10 rip', reps: 10, prop: 'Zaino pieno di libri/bottiglie (≈ 8–10 kg)', cue: 'Pausa di 1 secondo in alto e discesa lentissima di 4 secondi: è la fase che fa crescere di più il muscolo.' },
+          { lv: 4, name: 'Curl a martello + classico con zaino carico (10+ kg)', animKey: 'backpack_curl', target: '4 × 10 rip', reps: 10, prop: 'Zaino molto carico (10–12 kg)', cue: '5 ripetizioni impugnando le spallacce a martello (pollici in alto) + 5 classiche dalla maniglia. Gomiti sempre fermi.' }
+        ],
+        triceps: [
+          { lv: 1, name: 'Piegamenti stretti al muro (tricipiti)', animKey: 'close_push_lv1', target: '3–4 × 12 rip', reps: 12, prop: 'Muro libero', cue: 'Mani al muro più strette delle spalle, gomiti che sfiorano le costole puntando verso il basso. Scendi in 2 secondi, spingi con le braccia.' },
+          { lv: 2, name: 'Piegamenti stretti su tavolo (tricipiti)', animKey: 'close_push_lv2', target: '3–4 × 10 rip', reps: 10, prop: 'Tavolo stabile / piano cucina', cue: 'Mani vicine sul bordo, corpo dritto. I gomiti scivolano indietro lungo i fianchi, mai verso l\'esterno.' },
+          { lv: 3, name: 'Piegamenti stretti sulle ginocchia', animKey: 'close_push_lv3', target: '4 × 8–10 rip', reps: 9, prop: 'Asciugamano sotto le ginocchia', cue: 'Mani sotto il petto vicine tra loro, gomiti verso i piedi. Linea dritta ginocchia-spalle.' },
+          { lv: 4, name: 'Piegamenti a diamante a terra', animKey: 'close_push_lv4', target: '4 × 8–10 rip', reps: 9, prop: 'Pavimento', cue: 'Pollici e indici formano un diamante sotto lo sterno. Discesa lenta, spinta decisa: il miglior esercizio a corpo libero per i tricipiti.' }
         ]
       };
+
+      // Fixed (non-track) arm exercise used on Fridays when Focus Braccia is on
+      const TRICEP_EXT_EX = {
+        animKey: 'backpack_tricep_ext', name: 'Estensioni tricipiti sopra la testa con zaino (seduto)', type: 'reps', value: 12,
+        muscle: 'Tricipiti (capo lungo)', prop: 'Zaino carico + sedia', cue: 'Seduto con schiena dritta, zaino tenuto con due mani sopra la testa. Piega SOLO i gomiti portando lo zaino dietro la nuca, poi distendi. Usa lo stesso zaino del curl o un po\' più leggero.',
+        mistake: 'Aprire i gomiti verso l\'esterno o inarcare la schiena.'
+      };
+
+      // Focus Braccia: swaps lower-value slots on upper days with biceps/triceps work,
+      // grouped in a dedicated block so total duration stays ~60 / ~30 / ~15 min.
+      const ARMS_SWAPS = {
+        'p1-l-3': { track: 'triceps' }, 'p1-l-4': { track: 'biceps' },
+        'p1-me-3': { track: 'biceps' }, 'p1-me-5': { track: 'triceps' },
+        'p1-v-3': { fixed: 'tricepExt' }, 'p1-v-4': { track: 'biceps' },
+        'p2-l-3': { track: 'triceps' }, 'p2-l-4': { track: 'biceps' },
+        'p2-m-3': { track: 'biceps' }, 'p2-m-4': { track: 'triceps' },
+        'p2-v-4': { fixed: 'tricepExt' }, 'p2-v-6': { track: 'biceps' }
+      };
+
+      function applyArmsFocus(w) {
+        const arms = [];
+        const rest = [];
+        w.exercises.forEach(ex => {
+          const sw = ARMS_SWAPS[ex.id];
+          if (!sw) { rest.push(ex); return; }
+          const common = { id: ex.id + '-arm', block: 'Focus Braccia', tier: 'med', sets60: 4, sets30: ex.tier === 'full' ? 2 : 3, sets15: 2, rest60: 55, armsFocus: true };
+          if (sw.track) {
+            arms.push(Object.assign(common, {
+              track: sw.track,
+              muscle: sw.track === 'biceps' ? 'Bicipiti' : 'Tricipiti',
+              mistake: sw.track === 'biceps' ? 'Dondolare con la schiena o spostare i gomiti in avanti.' : 'Aprire i gomiti a T o lasciare cadere il bacino.'
+            }));
+          } else {
+            arms.push(Object.assign(common, TRICEP_EXT_EX));
+          }
+        });
+        if (!arms.length) return w;
+        arms.sort((a, b) => (a.track === 'biceps' ? 1 : 0) - (b.track === 'biceps' ? 1 : 0));
+        let insertAt = 0;
+        rest.forEach((ex, i) => { if (ex.block === 'Forza Upper') insertAt = i + 1; });
+        rest.splice(insertAt, 0, ...arms);
+        return Object.assign({}, w, {
+          exercises: rest,
+          tag: w.tag,
+          focus: w.focus + ' + Focus Braccia',
+          armsFocus: true
+        });
+      }
 
       function buildExercise(ex) {
         if (ex.track) {
@@ -888,7 +1067,8 @@ window.PrepEngine = (function () {
         ];
 
         const rawList = phase === 1 ? phase1Raw : phase2Raw;
-        return rawList.map(w => adaptWorkoutForMode(w, mode));
+        const armsOn = state.training.armsFocus !== false;
+        return rawList.map(w => adaptWorkoutForMode(armsOn ? applyArmsFocus(w) : w, mode));
       }
 
       // ──────────────────────────────────────────────────────────────
@@ -1040,12 +1220,12 @@ window.PrepEngine = (function () {
     buildAnimSvgInner,
     PROGRESSIONS,
     DINNER_RECIPES,
-    getPhaseWorkouts(phase, durationMode, levels) {
-      state = { training: { durationMode: durationMode || 'full60', levels: levels || { push: 1, pull: 1, shoulders: 1, core: 1 } } };
+    getPhaseWorkouts(phase, durationMode, levels, armsFocus) {
+      state = { training: { durationMode: durationMode || 'full60', armsFocus: armsFocus !== false, levels: Object.assign({ push: 1, pull: 1, shoulders: 1, core: 1, biceps: 1, triceps: 1 }, levels || {}) } };
       return getPhaseWorkouts(phase);
     },
     buildExercise(ex, levels) {
-      state = { training: { levels: levels || { push: 1, pull: 1, shoulders: 1, core: 1 } } };
+      state = { training: { levels: Object.assign({ push: 1, pull: 1, shoulders: 1, core: 1, biceps: 1, triceps: 1 }, levels || {}) } };
       return buildExercise(ex);
     }
   };

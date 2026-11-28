@@ -1,4 +1,4 @@
-const CACHE_NAME = 'preparatore-casa-v1';
+const CACHE_NAME = 'preparatore-casa-v2';
 const ASSETS = [
   './',
   './index.html',

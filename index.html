@@ -468,6 +468,29 @@
     .lv-stepper button:disabled { opacity: 0.3; }
     .lv-stepper span { padding: 0 4px; }
 
+
+    /* Focus Braccia iOS-style toggle row */
+    .arms-toggle {
+      display: flex; align-items: center; gap: 12px; width: 100%;
+      min-height: 52px; padding: 8px 12px; border-radius: 16px;
+      background: var(--glass-bg-strong); border: 1px solid var(--glass-hairline);
+      color: var(--text); text-align: left; cursor: pointer; font: inherit;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .arms-emoji { font-size: 22px; line-height: 1; }
+    .arms-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+    .ios-switch {
+      position: relative; flex: none; width: 51px; height: 31px; border-radius: 999px;
+      background: rgba(120, 120, 128, 0.32); transition: background .25s ease;
+    }
+    .ios-knob {
+      position: absolute; top: 2px; left: 2px; width: 27px; height: 27px; border-radius: 50%;
+      background: #fff; box-shadow: 0 3px 8px rgba(0,0,0,.15), 0 1px 1px rgba(0,0,0,.16);
+      transition: transform .25s cubic-bezier(.3,.7,.4,1);
+    }
+    .arms-toggle.on .ios-switch { background: #34c759; }
+    .arms-toggle.on .ios-knob { transform: translateX(20px); }
+
     /* Exercise Animation Viewer */
     .anim-viewer {
       border-radius: 18px;
@@ -836,7 +859,8 @@
             phase: 1,
             durationMode: 'full60', // 60 min default!
             selectedDayIdx: getInitialWorkoutDayIdx(1),
-            levels: { push: 1, pull: 1, shoulders: 1, core: 1 },
+            levels: { push: 1, pull: 1, shoulders: 1, core: 1, biceps: 1, triceps: 1 },
+            armsFocus: true,
             completedSessions: [],
             soundEnabled: true,
             animSpeedMs: 900
@@ -994,7 +1018,7 @@
       // WORKOUT & NUTRITION HELPERS
       // ──────────────────────────────────────────────────────────────
       function getWorkouts(phase) {
-        return Engine.getPhaseWorkouts(phase, state.training.durationMode, state.training.levels);
+        return Engine.getPhaseWorkouts(phase, state.training.durationMode, state.training.levels, state.training.armsFocus !== false);
       }
 
       function buildEx(raw) {
@@ -1654,7 +1678,21 @@
                 <button data-dur="med30" class="seg-btn ${state.training.durationMode === 'med30' ? 'active' : ''}">30 min</button>
                 <button data-dur="quick15" class="seg-btn ${state.training.durationMode === 'quick15' ? 'active' : ''}">15 min</button>
               </div>
+              <button data-arms-toggle class="arms-toggle ${state.training.armsFocus !== false ? 'on' : ''}" aria-pressed="${state.training.armsFocus !== false}">
+                <span class="arms-emoji">💪</span>
+                <span class="arms-text">
+                  <span class="h3">Focus Braccia</span>
+                  <span class="sub-xs">${state.training.armsFocus !== false ? `Bicipiti L${state.training.levels.biceps || 1} · Tricipiti L${state.training.levels.triceps || 1} nei giorni upper` : 'Disattivato: scheda standard'}</span>
+                </span>
+                <span class="ios-switch"><span class="ios-knob"></span></span>
+              </button>
             </div>
+            ${state.training.armsFocus !== false && activeW.armsFocus ? `
+              <div class="glass-sub pad-sub stack-xs">
+                <div class="sub-xs"><strong style="color:var(--text);">🎒 Il tuo manubrio a costo zero:</strong> riempi uno zaino robusto con bottiglie d'acqua (1,5 L ≈ 1,5 kg l'una) o libri. Inizia con 3–4 kg e aggiungi peso quando completi tutte le ripetizioni con facilità.</div>
+                <div class="sub-xs"><strong style="color:var(--text);">Per vedere le braccia crescere:</strong> ultime 2 ripetizioni sempre faticose, ~1,6 g di proteine per kg di peso al giorno e dormire 7–8 ore.</div>
+              </div>
+            ` : ''}
 
             <!-- Day Picker -->
             <div class="${ws.length === 5 ? 'day-grid-5' : 'day-grid-3'}">
@@ -1921,7 +1959,9 @@
                   { k: 'push', l: 'Spinta (Petto & Tricipiti)' },
                   { k: 'pull', l: 'Tirata (Schiena & Bicipiti)' },
                   { k: 'shoulders', l: 'Spalle (Deltoidi)' },
-                  { k: 'core', l: 'Core & Stabilità' }
+                  { k: 'core', l: 'Core & Stabilità' },
+                  { k: 'biceps', l: '💪 Bicipiti (Curl con zaino)' },
+                  { k: 'triceps', l: '💪 Tricipiti (Piegamenti stretti)' }
                 ].map(tr => {
                   const lv = state.training.levels[tr.k] || 1;
                   const prog = Engine.PROGRESSIONS[tr.k][lv - 1];
@@ -2155,6 +2195,9 @@
 
         document.querySelectorAll('[data-phase]').forEach(b => {
           b.onclick = () => { state.training.phase = parseInt(b.dataset.phase, 10); state.training.selectedDayIdx = 0; saveState(state); render(); };
+        });
+        document.querySelectorAll('[data-arms-toggle]').forEach(b => {
+          b.onclick = () => { state.training.armsFocus = state.training.armsFocus === false; saveState(state); render(); };
         });
         document.querySelectorAll('[data-dur]').forEach(b => {
           b.onclick = () => { state.training.durationMode = b.dataset.dur; saveState(state); render(); };
